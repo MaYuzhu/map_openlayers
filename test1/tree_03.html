@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>树结构动态数据</title>
+    <style>
+        ul,li{
+            list-style: none;
+        }
+        span,label{
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 1px solid #999;
+            background: #162a51 url("./img/tree_3.png") 0px 0px no-repeat;
+        }
+        label{
+            transform: translate(-90px,4px);
+        }
+        .checked {background-position-x: -38px;background-position-y:-2px}
+        .checkHalf{background-position-x: -17px;background-position-y:-2px}
+        .default{background-position-x: 0px;}
+    </style>
+</head>
+<body>
+<div class="wrap">
+
+</div>
+
+
+</body>
+<script type="text/javascript" src="./jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var url = 'http://192.168.10.7:8080/'
+        var $ajax1 = $.ajax({
+            type: 'POST',
+            url: url + 'authc/login',
+            data: {username:'root',password:'root'},
+            dataType: 'json',
+            xhrFields:{
+                withCredentials:true
+            },
+            traditional: true,
+            crossDomain: true,
+            cache:true,
+            async: true,
+            success: function (json) {
+                //console.log(json)
+            },
+            error: function () {
+                alert('error')
+            }
+        })
+        $.when($ajax1).done(function () {
+            $.ajax({
+                type: 'GET',
+                url: url + 'resource/list',
+                data: {},
+                dataType: 'json',
+                xhrFields:{
+                    withCredentials:true
+                },
+                traditional: true,
+                crossDomain: true,
+                cache:true,
+                async: true,
+                success: function (json) {
+                    console.log(json)
+                    var tree = json.body
+                    $('.wrap').html(`
+                            <ul class="one_1" level="1000">
+                                <li><img src="./img/minus_alt.png" id="img_one"/>
+                                    <span name="_lblCheck" class="default" num_children=${tree.length}></span>所有权限
+                                    <ul level="100" id="wrap_2" num_children=${tree.length}></ul>
+                                </li>
+                            </ul>`)
+                    for(let i=0;i<tree.length;i++){
+                        $('#wrap_2').append(`
+                        <li><img src="./img/minus_alt.png" id="img${i}"/>
+                            <span name="lblCheck"  num_children=${tree[i].children.length}></span>${tree[i].identity_name}
+                            <ul id=tree${i} level="10" class=small_ul${i}>
+
+                            </ul>
+                        </li>`)
+                        for(let j=0;j<tree[i].children.length;j++){
+                            $(`.small_ul${i}`).append(`<li>
+
+                                <input checked id="thirdCheck${i+1}_${j+1}" index="0" name="one_3_1" type="checkbox">
+                                    ${tree[i].children[j].identity_name}
+                                <label for="thirdCheck${i + 1}_${j + 1}" >
+                                </label>
+                                </li>`)
+                        }
+
+                        $(`#img${i}`).click(function() {
+                            if($(`#tree${i}`).is(":visible")) {
+                                //                     alert("隐藏内容");
+                                $(`#img${i}`).attr("src", "./img/plus_alt.png");
+                            } else {
+                                //                      alert("显示内容");
+                                $(`#img${i}`).attr("src", "./img/minus_alt.png");
+                            }
+                            $(`#tree${i}`).slideToggle(300);
+                        })
+                    }
+
+                    $(`#img_one`).click(function() {
+                        if($(`#wrap_2`).is(":visible")) {
+                            //                     alert("隐藏内容");
+                            $(`#img_one`).attr("src", "./img/plus_alt.png");
+                        } else {
+                            //                      alert("显示内容");
+                            $(`#img_one`).attr("src", "./img/minus_alt.png");
+                        }
+                        $(`#wrap_2`).slideToggle(300);
+                    })
+                    BindCheckNode()
+                    BindCheckNodeTwo()
+                    $("span[name$='lblCheck']").click(checkBoxClick)
+                    $("input[type=checkbox]").change(checkBoxChange)
+                },
+                error: function () {
+                    alert('error')
+                }
+            })
+
+        })
+
+
+    })
+
+    //默认的状态显示
+    function BindCheckNode() {
+        //判断选中状态的节点的子节点是否全部选中，
+        $("span[name^='lblCheck']").each(function(){
+            var curNode = this.parentNode
+            //console.log(curNode)
+            if(CheckAll(curNode)=='checkHalf') {
+                $(this).attr("class","checkHalf");
+            }else if(CheckAll(curNode)=='checked'){
+                $(this).attr("class","checked");
+            }else {
+                $(this).attr("class","default");
+            }
+        });
+    }
+    function BindCheckNodeTwo() {
+        $("span[name^='_lblCheck']").each(function(){
+            var curNode = this.parentNode
+            var num1 = parseInt($(curNode).children('span').attr("num_children"))
+            var checked_num_1 = []
+            var new_checked_num_1 = []
+            var new_no_checked_num_1 = []
+            $($(curNode).children('ul').children().children('span')).each(function () {
+                checked_num_1.push($(this).attr('class'))
+            })
+            checked_num_1.forEach(function (item) {
+                if(item == 'checked'){
+                    new_checked_num_1.push('全选')
+                }else if(item == 'default'){
+                    new_no_checked_num_1.push('无')
+                }
+
+            })
+            if(new_checked_num_1.length == num1){
+                $(this).attr("class","checked")
+            }else if(new_no_checked_num_1.length == num1){
+                $(this).attr("class","default")
+            }else {
+                $(this).attr("class","checkHalf")
+            }
+        });
+    }
+    //选中状态判断
+    function CheckAll(curNode) {
+        var checked_num = []
+        var num2 = parseInt($(curNode).children('span').attr("num_children"))
+        //var nextNode = $(curNode).children('ul').children().children().eq(0)
+        //console.log($(curNode).children('ul').children().children())
+        $($(curNode).children('ul').children().children()).each(function () {
+            if($(this).attr('checked') == 'checked'){
+                checked_num.push(1)
+                $(this).next().attr('class', 'checked')
+            }
+        })
+        console.log(num2)
+        if(checked_num.length == num2){
+            return 'checked'
+        }else if(checked_num.length == 0){
+            return 'default'
+        }else {
+            return 'checkHalf'
+        }
+        // while (nextNode != null && parseInt($(nextNode).attr("index")) < num2) {
+        //     //每个节点都要循环它的所有子节点，判断是否选择
+        //     if ($(nextNode).attr("checked") != "checked") {
+        //         return false
+        //     }
+        //     nextNode = $(nextNode).next()
+        // }
+        // return true;
+        /*var level = parseInt($(curNode).attr("level"));
+        var nextNode = $(curNode).next();
+        while (nextNode != null && parseInt($(nextNode).attr("level")) > level) {
+            //每个节点都要循环它的所有子节点，判断是否选择
+            var nextCheck=$(nextNode).children().eq(0).children("span").eq(1);
+            if ($(nextCheck).attr("class") == "default") {
+                return false;
+            }
+            nextNode = $(nextNode).next();
+        }
+        return true;*/
+    }
+    //一级 二级菜单的点击事件
+    function checkBoxClick() {
+        var isChecked = $(this).attr("class") == "default" ? "checked"  : "default";
+        $(this).attr("class",isChecked);
+        //同步checkbox
+        $(this).next().children().children().prop("checked", isChecked != "default");
+        $(this).next().children().children('ul').children().children('label').attr("class", isChecked);
+        $(this).next().children().children().children('label').attr("class", isChecked);
+        $(this).next().children().children().attr("class", isChecked);
+
+        var trNode = $(this).parent().parent();
+
+        var ul_1_class = $(trNode).attr('class')
+        if(ul_1_class){
+            $(`.${ul_1_class} input`).prop('checked',isChecked != "default")
+        }
+        //console.log(ul_1_class)
+        BindCheckNodeTwo()
+    }
+    //三级菜单的点击事件
+    function checkBoxChange() {
+        var ul_3 = $(this).parent().parent().children()
+        var ul_3_class = $(ul_3).parent().attr('id')
+        //console.log(ul_3_class)
+        var checked_num = $(`#${ul_3_class} input:checked`).size()
+        if(ul_3.length > checked_num && checked_num > 0){
+            $(this).parent().parent().prev().attr("class", 'checkHalf')
+        }else if(ul_3.length == checked_num){
+            $(this).parent().parent().prev().attr("class", 'checked')
+        }else {
+            $(this).parent().parent().prev().attr("class", 'default')
+        }
+        if($(this).is(':checked')){
+            $(this).next().attr('class','checked')
+        }else {
+            $(this).next().attr('class','default')
+        }
+        //console.log(checked_num)
+        BindCheckNodeTwo()
+    }
+
+
+
+</script>

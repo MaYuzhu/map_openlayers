@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>树结构</title>
+    <style>
+        span{
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            border: 1px solid #999;
+            background: url("./img/test01.png") 0px 0px no-repeat;
+        }
+        .checked {background-position-x: -56px;}
+        .checkHalf{background-position-x: -30px;}
+        .default{background-position-x: 0px;}
+    </style>
+</head>
+<body>
+    <ul class="one_1" level="1000">
+       <li>
+           <span name="_lblCheck" class="default" num_children="3"></span>一级目录
+           <ul level="100" num_children="3">
+               <li>
+                   <span name="lblCheck"  num_children="4"></span>二级目录2-1
+                   <ul id="tree_1" level="10">
+                       <li><input  index="0" name="one_3_1" type="checkbox">三级目录3-1</li>
+                       <li><input  index="1" name="one_3_1" type="checkbox">三级目录3-2</li>
+                       <li><input  index="2" name="one_3_1" type="checkbox">三级目录3-3</li>
+                       <li><input  index="3" name="one_3_1" type="checkbox">三级目录3-4</li>
+                   </ul>
+               </li>
+               <li>
+                   <span name="lblCheck"  num_children="3"></span>二级目录2-2
+                   <ul id="tree_2" level="10">
+                       <li><input  index="0" name="two_3_2" type="checkbox">三级目录3-1</li>
+                       <li><input  index="1" name="two_3_2" type="checkbox">三级目录3-2</li>
+                       <li><input  index="2" name="two_3_2" type="checkbox">三级目录3-3</li>
+                   </ul>
+               </li>
+               <li>
+                   <span name="lblCheck"  num_children="2"></span>二级目录2-3
+                   <ul id="tree_3" level="10">
+                       <li><input  index="0"  name="three_3_3" type="checkbox">三级目录3-1</li>
+                       <li><input  index="1"  name="three_3_3" type="checkbox">三级目录3-2</li>
+                       <!--<li><input index="3" checked name="three_3_3" type="checkbox">三级目录3-3</li>-->
+                   </ul>
+               </li>
+           </ul>
+       </li>
+    </ul>
+
+    <div id="number" style="padding:10px">已选道0多选题</div>
+    <input type="checkbox" name="qId" value="1"/>
+    <input type="checkbox" name="qId" value="2"/>
+    <input type="checkbox"  name="qId" value="3"/>
+    <input type="checkbox"  name="qId" value="4"/>
+</body>
+<script type="text/javascript" src="./jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        BindCheckNode()
+        BindCheckNodeTwo()
+        $("span[name$='lblCheck']").click(checkBoxClick)
+        $("input[type=checkbox]").change(checkBoxChange)
+    })
+
+    //默认的状态显示
+    function BindCheckNode() {
+        //判断选中状态的节点的子节点是否全部选中，
+        $("span[name^='lblCheck']").each(function(){
+            var curNode = this.parentNode
+            //console.log(curNode)
+            if(CheckAll(curNode)=='checkHalf') {
+                $(this).attr("class","checkHalf");
+            }else if(CheckAll(curNode)=='checked'){
+                $(this).attr("class","checked");
+            }else {
+                $(this).attr("class","default");
+            }
+        });
+    }
+    function BindCheckNodeTwo() {
+        $("span[name^='_lblCheck']").each(function(){
+            var curNode = this.parentNode
+            var num1 = parseInt($(curNode).children('span').attr("num_children"))
+            var checked_num_1 = []
+            var new_checked_num_1 = []
+            var new_no_checked_num_1 = []
+            $($(curNode).children('ul').children().children('span')).each(function () {
+                checked_num_1.push($(this).attr('class'))
+            })
+            checked_num_1.forEach(function (item) {
+                if(item == 'checked'){
+                    new_checked_num_1.push('全选')
+                }else if(item == 'default'){
+                    new_no_checked_num_1.push('无')
+                }
+
+            })
+            if(new_checked_num_1.length == num1){
+                $(this).attr("class","checked")
+            }else if(new_no_checked_num_1.length == num1){
+                $(this).attr("class","default")
+            }else {
+                $(this).attr("class","checkHalf")
+            }
+        });
+    }
+    //选中状态判断
+    function CheckAll(curNode) {
+        var checked_num = []
+        var num2 = parseInt($(curNode).children('span').attr("num_children"))
+        //var nextNode = $(curNode).children('ul').children().children().eq(0)
+        //console.log($(curNode).children('ul').children().children())
+        $($(curNode).children('ul').children().children()).each(function () {
+            if($(this).attr('checked') == 'checked'){
+                checked_num.push(1)
+            }
+        })
+        //console.log(checked_num)
+        if(checked_num.length == num2){
+            return 'checked'
+        }else if(checked_num.length == 0){
+            return 'default'
+        }else {
+            return 'checkHalf'
+        }
+        // while (nextNode != null && parseInt($(nextNode).attr("index")) < num2) {
+        //     //每个节点都要循环它的所有子节点，判断是否选择
+        //     if ($(nextNode).attr("checked") != "checked") {
+        //         return false
+        //     }
+        //     nextNode = $(nextNode).next()
+        // }
+        // return true;
+        /*var level = parseInt($(curNode).attr("level"));
+        var nextNode = $(curNode).next();
+        while (nextNode != null && parseInt($(nextNode).attr("level")) > level) {
+            //每个节点都要循环它的所有子节点，判断是否选择
+            var nextCheck=$(nextNode).children().eq(0).children("span").eq(1);
+            if ($(nextCheck).attr("class") == "default") {
+                return false;
+            }
+            nextNode = $(nextNode).next();
+        }
+        return true;*/
+    }
+    //一级 二级菜单的点击事件
+    function checkBoxClick() {
+        var isChecked = $(this).attr("class") == "default" ? "checked"  : "default";
+        $(this).attr("class",isChecked);
+        //同步checkbox
+        $(this).next().children().children().prop("checked", isChecked != "default");
+        $(this).next().children().children().attr("class", isChecked);
+
+        var trNode = $(this).parent().parent();
+
+        var ul_1_class = $(trNode).attr('class')
+        if(ul_1_class){
+            $(`.${ul_1_class} input`).prop('checked',isChecked != "default")
+        }
+        //console.log(ul_1_class)
+        BindCheckNodeTwo()
+    }
+    //三级菜单的点击事件
+    function checkBoxChange() {
+        var ul_3 = $(this).parent().parent().children()
+        var ul_3_class = $(ul_3).parent().attr('id')
+        var checked_num = $(`#${ul_3_class} input:checked`).size()
+        if(ul_3.length > checked_num && checked_num > 0){
+            $(this).parent().parent().prev().attr("class", 'checkHalf')
+        }else if(ul_3.length == checked_num){
+            $(this).parent().parent().prev().attr("class", 'checked')
+        }else {
+            $(this).parent().parent().prev().attr("class", 'default')
+        }
+        //console.log(checked_num)
+        BindCheckNodeTwo()
+    }
+
+
+
+</script>
+<script type="text/javascript">
+    $('input[name="qId"]').click(doit)
+    function doit() {
+        var n = $('input[name="qId"]:checked').size();
+        var objs = document.getElementsByName("qId");
+        for(var i=0; i<objs.length; i++) {
+            if(objs[i].checked) {
+                n+1;
+            }
+        }
+        document.getElementById("number").innerText="已选"+n+"道多选题";
+    }
+
+    //数组截取1
+    var a = [1,2,3,4,5,6,]
+    sliceArr(a,3)
+    //console.log(sliceArr(a,3))
+    function sliceArr(array, size) {
+        var result = [];
+        for (var x = 0; x < Math.ceil(array.length / size); x++) {
+            var start = x * size;
+            var end = start + size;
+            result.push(array.slice(start, end));
+        }
+        return result;
+    }
+
+    //数组截取2
+    let data = "1234".split("");
+    let productData=[];
+    let num = Math.ceil(data.length / 2);
+    for(let i= 0 ;i<num;i++){
+        productData.push(data.slice(i*2,i*2+2))
+    }
+    //console.log(productData);
+</script>
+</html>

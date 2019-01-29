@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>T1</title>
+    <!--<link rel="stylesheet" href="./lib/g.css">-->
+    <link rel="stylesheet" type="text/css" href="./js/OpenLayers/css/ol.css" />
+    <script src="./js/OpenLayers/build/ol.js" type="text/javascript"></script>
+    <!--<script type="text/javascript" src="./lib/g.min.js"></script>-->
+    <style>
+        #map-container{
+            width: 900px;
+            height: 600px;
+            border: 1px solid #999;
+            positon:absolute;
+        }
+    </style>
+</head>
+<body>
+    <div id="mapContainer"></div>
+    <div id="map-container"></div>
+</body>
+<script>
+
+    //var url = 'http://geohey.com/s/mapping/{地图id}/all
+    // ?z={z}&x={x}&y={y}&ak={用户注册后添加的ak}&retina=@2x';
+
+    //var url = 'https://geohey.com/apps/dataviz/02f0c3550aa547eda41ddb65024750d1/share?' +
+     //   'ak=OGJkMGQwNTVlNzYzNDA0NmIwNDYxZDY4YjQwYmJlYzc'
+
+//ca47faf0028d11e99a0c53b9606a4b8b  id
+
+    var url = 'https://geohey.com/s/dataviz/e42d88bb76df542e86a9d2eea4789071/' +
+       '{z}/{x}/{y}.png?ak=OGJkMGQwNTVlNzYzNDA0NmIwNDYxZDY4YjQwYmJlYzc&retina=@2x';
+
+    /*var url = 'https://s7.geohey.com/s/dataviz/6c2d884bc36d5940300caa58a762167f/15/27105/' +
+        '12525.png?retina=&ak=OGJkMGQwNTVlNzYzNDA0NmIwNDYxZDY4YjQwYmJlYzc'*/
+    var googleSatelliteLayer = new ol.layer.Tile({
+        source: new ol.source.XYZ({
+            url:'http://mt2.google.cn/vt/lyrs=y&hl=zh-CN&gl=CN&src=app&x={x}&y={y}&z={z}&s=G'//谷歌卫星地图 混合
+        }),
+        projection: 'EPSG:3857'
+    })
+
+     // 此时类库加载完成
+        var layers = [
+            //谷歌影像底图
+            new ol.layer.Tile({
+                source: new ol.source.XYZ({
+                    url:'http://mt2.google.cn/vt/lyrs=y&hl=zh-CN&gl=CN&src=app&x={x}&y={y}&z={z}&s=G'//谷歌卫星地图 混合
+                }),
+                projection: 'EPSG:3857'
+            }),
+            //极海的
+            new ol.layer.Tile({
+                source: new ol.source.XYZ({
+                    url: url,//添加GeoHey地图
+                    tilePixelRatio: 2,//表示加载高清图显示
+                    crossOrigin:null
+                })
+            }),
+        ];
+
+        var map = new ol.Map({
+            layers: layers,
+            target: 'map-container',
+            view: new ol.View({
+                center: [13110795.607205058,4719031.500290665],
+                zoom: 15
+            })
+        });
+    //显示总时长
+    function speedBar(start,end) {
+        var date = new Date(start.replace(/-/g, '/'))
+        var start_time = Date.parse(date)
+        var date_end = new Date(end.replace(/-/g, '/'))
+        var end_time = Date.parse(date_end)
+        time_slot = end_time - start_time
+        var result = formatDuring(time_slot/1000)
+        $('.speed_box>:last-child').text(result)
+        maxtime = time_slot / 1000
+        ball_speed = bar_w / maxtime //测试 最后删
+    }
+</script>
+</html>

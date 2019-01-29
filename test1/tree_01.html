@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        ul {
+            display: block;
+            list-style: none;
+            cursor: pointer;
+        }
+
+        #lv2U,#lv3U1,#lv3U2,#lv3U3 {
+            display: none;
+        }
+
+        #tree img {
+            display: block;
+            float: left;
+            width: 20px;
+            height: 20px;
+        }
+
+        .lv3Checks{
+            display: block; float: left; clear: left; width: 15px; height: 15px;
+        }
+    </style>
+</head>
+
+<body>
+<div id="tree">
+
+    <ul id="lv1U">
+        <img src="./img/plus_alt.png" id="lv1M" />
+        <input type="checkbox" id="allCheck" style="display: block; float: left; width: 15px; height: 15px;"/>
+        <li id="lv1L1"><span>一级菜单 状态<span>...</span></span>
+            <ul id="lv2U" style="clear: left;">
+                <img src="./img/plus_alt.png" id="lv2M1" style="clear: left;"/>
+                <input type="checkbox" id="secondCheck1" style="display: block; float: left; width: 15px; height: 15px;"/>
+                <li id="lv2L1"><span>二级菜单1 状态<span>...</span></span>
+                    <ul id="lv3U1" style="clear: left;">
+                        <input checked type="checkbox" name="lv3_1Check" class="lv3Checks"/>
+                        <li>三级菜单1_1</li>
+                        <input checked type="checkbox" name="lv3_1Check" class="lv3Checks"/>
+                        <li>三级菜单1_2</li>
+                        <input checked type="checkbox" name="lv3_1Check" class="lv3Checks"/>
+                        <li>三级菜单1_3</li>
+                    </ul>
+                </li>
+
+                <img src="./img/plus_alt.png" id="lv2M2" style="clear: left;"/>
+                <input type="checkbox" id="secondCheck2" style="display: block; float: left; width: 15px; height: 15px;"/>
+                <li id="lv2L2"><span style="float: left;">二级菜单2 状态<span>...</span></span>
+                    <ul id="lv3U2" style="clear: left;">
+                        <input type="checkbox" name="lv3_2Check" class="lv3Checks"/>
+                        <li>三级菜单2_1</li>
+                        <input type="checkbox" name="lv3_2Check" class="lv3Checks"/>
+                        <li>三级菜单2_2</li>
+                        <input type="checkbox" name="lv3_2Check" class="lv3Checks"/>
+                        <li>三级菜单2_3</li>
+                        <input type="checkbox" name="lv3_2Check" class="lv3Checks"/>
+                        <li>三级菜单2_4</li>
+                        <input type="checkbox" name="lv3_2Check" class="lv3Checks"/>
+                        <li>三级菜单2_5</li>
+                    </ul>
+                </li>
+                <img src="./img/plus_alt.png" id="lv2M3" style="clear: left;"/>
+                <input type="checkbox" id="secondCheck3" style="display: block; float: left; width: 15px; height: 15px;"/>
+                <li id="lv2L3">
+                    <span style="float: left;">二级菜单3 状态<span>...</span></span>
+                    <ul id="lv3U3" style="clear: left;">
+                        <input type="checkbox" name="lv3_3Check" class="lv3Checks"/>
+                        <li>三级菜单3_1</li>
+                        <input type="checkbox" name="lv3_3Check" class="lv3Checks"/>
+                        <li>三级菜单3_2</li>
+                        <input type="checkbox" name="lv3_3Check" class="lv3Checks"/>
+                        <li>三级菜单3_3</li>
+                        <input type="checkbox" name="lv3_3Check" class="lv3Checks"/>
+                        <li>三级菜单3_4</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+</div>
+
+<script type="text/javascript" src="./jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $("#lv1M").click(function() {
+            if($("#lv2U").is(":visible")) {
+                //                      alert("隐藏内容");
+                $("#lv1M").attr("src", "./img/plus_alt.png");
+            } else {
+                //                      alert("显示内容");
+                $("#lv1M").attr("src", "./img/minus_alt.png");
+            }
+            $("#lv2U").slideToggle(300);
+        });
+
+        $("#lv2M1").click(function() {
+            if($("#lv3U1").is(":visible")) {
+                //                      alert("隐藏内容");
+                $("#lv2M1").attr("src", "./img/plus_alt.png");
+            } else {
+                //                      alert("显示内容");
+                $("#lv2M1").attr("src", "./img/minus_alt.png");
+            }
+            $("#lv3U1").slideToggle(300);
+        });
+
+        $("#lv2M2").click(function() {
+            if($("#lv3U2").is(":visible")) {
+                //                      alert("隐藏内容");
+                $("#lv2M2").attr("src", "./img/plus_alt.png");
+            } else {
+                //                      alert("显示内容");
+                $("#lv2M2").attr("src", "./img/minus_alt.png");
+            }
+            $("#lv3U2").slideToggle(500);
+        });
+
+        $("#lv2M3").click(function() {
+            if($("#lv3U3").is(":visible")) {
+                //                      alert("隐藏内容");
+                $("#lv2M3").attr("src", "./img/plus_alt.png");
+            } else {
+                //                      alert("显示内容");
+                $("#lv2M3").attr("src", "./img/minus_alt.png");
+            }
+            $("#lv3U3").slideToggle(400);
+        });
+
+        $("#allCheck").click(function(){
+            $("input[type=checkbox]").prop("checked",$("#allCheck").prop("checked"));
+        });
+
+        $("#secondCheck1").click(function(){
+            $("input[name=lv3_1Check]").prop("checked",$("#secondCheck1").prop("checked"));
+        });
+
+        $("#secondCheck2").click(function(){
+            $("input[name=lv3_2Check]").prop("checked",$("#secondCheck2").prop("checked"));
+        });
+
+        $("#secondCheck3").click(function(){
+            $("input[name=lv3_3Check]").prop("checked",$("#secondCheck3").prop("checked"));
+        });
+
+        checkbox_state()
+        $('input[type=checkbox]').on('change',checkbox_state)
+        
+        function checkbox_state() {
+            var parentNode = $(this).parent()
+            var id = parentNode.attr('id')
+            var total = $(`#${id} input[type=checkbox]`).length
+            var check_num = $(`#${id} input[type=checkbox]:checked`).length
+            //console.log(total,check_num)
+            var id_li = parentNode.parent().attr('id')
+            console.log(id,id_li)
+            if($(`#${id}>input[type=checkbox]`).is(':checked')){
+                $(`#${id}>li>span`).text('全选')
+            }else {
+                $(`#${id}>li>span`).text('123')
+            }
+
+            if(check_num === 0){
+                $(`#${id_li}>span>span`).text('空白')
+                //$('#secondCheck1').prop('checked',false)
+            }else if(check_num != 0 && check_num < total){
+                $(`#${id_li}>span>span`).text('半选')
+                //$('#secondCheck1').prop('checked',false)
+            }else if(total === check_num){
+                $(`#${id_li}>span>span`).text('全选')
+                //$('#secondCheck1').prop('checked',true)
+            }
+        }
+    });
+</script>
+</body>
+<script>
+    $(function(){
+        BindCheckNode();
+        $("span[name^='lblCheck']").click(checkBoxClick);
+    });
+
+    function checkBoxClick()
+    {
+        var isChecked = $(this).attr("class") == "default" ? "checked"  : "default";
+        $(this).attr("class",isChecked);
+        //同步checkbox
+        $(this).next().children().eq(0).attr("checked",isChecked!="default");
+        var trNode = $(this).parent().parent();
+
+        childChange(trNode,isChecked);
+        parentChange(trNode,isChecked);
+    }
+
+    //数据绑定时，对选中状态的节点做变更，如果有一个子节点没有选中，则为半选中状态
+    function BindCheckNode()
+    {
+        //判断选中状态的节点的子节点是否全部选中，
+        $("span[name^='lblCheck']").each(function(){
+            if($(this).attr("class")=="checked")
+            {
+                var curNode = this.parentNode.parentNode;
+                if(!CheckAll(curNode))
+                {
+                    $(this).attr("class","checkHalf");
+                }
+            }
+        });
+    }
+
+    //选中状态判断
+    function CheckAll(curNode)
+    {
+        var level = parseInt($(curNode).attr("level"));
+        var id = $(curNode).attr("id");
+        var nextNode = $(curNode).next();
+        while (nextNode != null && parseInt($(nextNode).attr("level")) > level) {
+            //每个节点都要循环它的所有子节点，判断是否选择
+            var nextCheck=$(nextNode).children().eq(0).children("span").eq(1);
+            if ($(nextCheck).attr("class") == "default") {
+                return false;
+            }
+            nextNode = $(nextNode).next();
+        }
+        return true;
+    }
+
+    //checkbox点击后影响子节点
+    function childChange(curNode,className)
+    {
+        var level = parseInt($(curNode).attr("level"));
+        var nextNode = $(curNode).next();
+
+        //循环子节点
+        while(nextNode!=null && parseInt($(nextNode).attr("level") ) > level)
+        {
+            var nextCheck=$(nextNode).children().eq(0).children("span:eq(1)");
+            $(nextCheck).attr("class",className);
+            $(nextCheck).next().children().eq(0).attr("checked",className!="default");
+            nextNode=$(nextNode).next();
+        }
+    }
+
+    //checkbox点击后影响父节点
+    function parentChange(curNode, className)
+    {
+        var pid = $(curNode).attr("pid");
+        var parentNode = $("#"+pid);
+        if(!$(parentNode).attr("pid"))
+            return false;
+
+        var parentSpanCheck=$(parentNode).children().eq(0).children("span").eq(1);
+        var childList = $("tr[pid='"+pid+"']");
+        var flag = false;
+        var tempNode;
+        $.each(childList, function(i,item){
+            tempNode = $(item).children().eq(0).children("span").eq(1);
+            if($(tempNode).attr("class") != className) {
+                flag = true;
+                return;
+            }
+        });
+        if(flag) {
+            $(parentSpanCheck).attr("class", "checkHalf");
+        }
+        else if(!flag && className == "checked") {
+            $(parentSpanCheck).attr("class", "checked");
+        } else {
+            $(parentSpanCheck).attr("class", "default");
+        }
+        var parentSpanCheckClass=$(parentSpanCheck).attr("class");
+        $(parentSpanCheck).next().children().eq(0).attr("checked",parentSpanCheckClass!="default");
+        if(pid != "0"){
+            //changeParentState(parentNode, className);
+        }
+
+    }
+</script>
+</html>
