@@ -312,29 +312,29 @@
                 new ol.layer.Tile({//00ade9672f0e23b976401c7e80124159 //96446d97f5d7356c550efa87d0fdb101
                     source: new ol.source.XYZ({
                         //    http://188.131.132.10/s/imageryviz/21bf101494294f0cd5a5c285c3ede111/11/1615/946.png?retina=&ak=MDBhN2FmZmRhZDQxNDk5MmIyYWYzZjVjY2M4MzcyM2E
-                        url: 'http://188.131.132.10/s/imageryviz/9294a8a221c6063850f76905418e98fa/' +
-                        '{z}/{y}/{x}.png?retina=&ak=MDBhN2FmZmRhZDQxNDk5MmIyYWYzZjVjY2M4MzcyM2E',
+                        url: 'http://188.131.132.10/s/imageryviz/217a569c67b97eecd2bb62662579f4df/' +
+                        '{z}/{x}/{y}.png?ak=MDBhN2FmZmRhZDQxNDk5MmIyYWYzZjVjY2M4MzcyM2E&retina=@2x',
                         //projection:'EPSG:3857',
-                        tilePixelRatio: 2,//表示加载高清图显示
+                        tilePixelRatio: 1,// 2表示加载高清图显示
                         crossOrigin:null
                     })
                 }),
                 /*new ol.layer.Tile({
                     source: new ol.source.XYZ({
-                        url: 'https://geohey.com/s/imageryviz/af4cf6e979894bfe7a6ad8dbb9abb546' +
-                        '/{z}/{x}/{y}.png?retina=&ak=MTVjMWRmOTkyN2Y2NGU1YjhiODgzMDM4MDVkMWFiNWM',
+                        url: 'https://geohey.com/s/dataviz/fa98fd9829c93e9ce3b45c59b13b6083' +
+                        '/{z}/{x}/{y}.png?retina=@2x&ak=MTVjMWRmOTkyN2Y2NGU1YjhiODgzMDM4MDVkMWFiNWM',
                         tilePixelRatio: 2,//表示加载高清图显示
                         crossOrigin:null
                     })
                 }),*/
-                //https://s2.geohey.com/s/imageryviz/af4cf6e979894bfe7a6ad8dbb9abb546/3/6/3.png?retina=&ak=MTVjMWRmOTkyN2Y2NGU1YjhiODgzMDM4MDVkMWFiNWM
+
 
             ],
             view:new ol.View({
-                projection:'EPSG:3857',
-                center:[8502304.408063253, 4295146.334453878],
+                projection:'EPSG:4326',
+                center:[76.3775,35.9602],
                 //center:[11723601.040944528, 1452912.5061351976],
-                zoom:8,
+                zoom:4,
                 minZoom:1,
                 //maxZoom:12,
             }),
