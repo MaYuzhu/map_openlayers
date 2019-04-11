@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello 3D Earth</title>
+
+    <script src="./CesiumUnminified/Cesium.js"></script>
+    <script src="jquery-1.11.3.min.js"></script>
+    <style>
+        @import url('./Source/Widgets/widgets.css');
+        html, body, #cesiumContainer {
+            width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+        }
+        .cesium-viewer .cesium-widget-credits{
+            display: none;
+        }
+        .cesium-viewer-timelineContainer{
+            display: none;
+        }
+        ul, li{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .map{
+            position: relative;
+        }
+        .menu{
+            position: absolute;
+            z-index: 50;
+            color: #edffff;
+            top:50%;
+            transform: translate(0,-50%);
+            padding-right: 40px;
+            border: 1px solid rgba(83, 83, 83, 0.7);
+        }
+        .menu li{
+            width: 200px;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+            margin: 10px auto 10px 20px;
+            background: rgba(48, 51, 54, 0.7);
+            border-radius: 3px;
+            cursor: pointer;
+            border: 1px solid rgba(68, 68, 68, 0.85);
+        }
+        .menu li:hover{
+            background: rgba(68, 136, 187, 0.7);
+            border: 1px solid rgba(170, 238, 255, 0.85);
+            box-shadow: 0 0 8px #fff;
+        }
+        .menu .on{
+            background: rgba(68, 136, 187, 0.5);
+            border: 1px solid rgba(170, 238, 255, 0.85);
+            box-shadow: 0 0 8px #fff6cc;
+        }
+        .show{
+            position: absolute;
+            top: 50%;
+            transform: translate(0,-50%);
+            right: 3px;
+            cursor: pointer;
+        }
+        .show img{
+            width: 34px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="cesiumContainer" class="map">
+
+    <ul class="menu">
+            <li onclick="goto(1)">大熊猫栖息地影像</li>
+            <li onclick="goto(2)">长城MGW004-Ortho</li>
+            <li onclick="goto(3)">长城MGW055b-Ortho</li>
+            <li onclick="goto(4)">长城MGW028-Ortho</li>
+            <li onclick="goto(5)">长城MGW048-Ortho</li>
+
+            <li onclick="goto(8)">长城MGW004-3DMesh</li>
+            <li onclick="goto(7)">长城MGW055b-3DMesh</li>
+            <li onclick="goto(6)">长城MGW048-3DMesh</li>
+
+
+            <li onclick="goto(0)">返回初始位置</li>
+            <div class="show"><img src="./show.png" alt=""></div>
+    </ul>
+
+
+</div>
+<script>
+    var lis = document.querySelectorAll('.menu li')
+    for(let i=0;i<lis.length;i++){
+        lis[i].addEventListener('click',function () {
+            for (let j = 0; j < lis.length; j++) {
+                lis[j].classList.remove('on')
+            }
+            lis[i].classList.add('on')
+        })
+    }
+    var viewer = new Cesium.Viewer("cesiumContainer", {
+        animation: false, //是否显示动画控件(左下方那个)
+        baseLayerPicker: true, //是否显示图层选择控件
+        geocoder: true, //是否显示地名查找控件
+        timeline: true, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: true, //是否显示点击要素之后显示的信息
+    });
+
+
+    //MGW004-Ortho 服务 图层
+    var rectangleMGW004 = new Cesium.Rectangle(Cesium.Math.toRadians(109.97430300815466),Cesium.Math.toRadians(38.46070143172172),
+        Cesium.Math.toRadians(109.98084206901632),Cesium.Math.toRadians(38.46531296996153));
+    var imagelayerMGW004 = new Cesium.ImageryLayer(new Cesium.UrlTemplateImageryProvider({
+        url: 'http://localhost:9002/api/wmts/gettile/71fee08d66824e03bd3bb0f36c2b2f41/{z}/{x}/{y}',
+        tilingScheme: new Cesium.WebMercatorTilingScheme(),
+        minimumLevel: 0,
+        rectangle:  rectangleMGW004,
+        maximumLevel: 22,
+        credit: 'http://www.bjxbsj.cn',
+    }), {
+        show: true
+    });
+    //viewer.imageryLayers.add(imagelayerMGW004);
+    //viewer.scene.camera.flyTo({destination: rectangleMGW004});
+
+    //大熊猫栖息地影像数据服务
+    var rectangleDxm = new Cesium.Rectangle(Cesium.Math.toRadians(101.70550500807069),Cesium.Math.toRadians(29.210545375648298),
+        Cesium.Math.toRadians(104.61500802616614),Cesium.Math.toRadians(32.81559769455616));
+    var imagelayerDxm = new Cesium.ImageryLayer(new Cesium.UrlTemplateImageryProvider({
+        url: 'http://localhost:9002/api/wmts/gettile/29c86c8783b048c390744ffcc4194e8b/{z}/{x}/{y}',
+        tilingScheme: new Cesium.WebMercatorTilingScheme(),
+        minimumLevel: 0,
+        rectangle:  rectangleDxm,
+        maximumLevel: 13,
+        credit: 'http://www.bjxbsj.cn',
+    }), {
+        show: true
+    });
+    //viewer.imageryLayers.add(imagelayerDxm);
+    //viewer.scene.camera.flyTo({destination: rectangleDxm});
+
+    //长城55b 影像
+    var rectangleMGW55b = new Cesium.Rectangle(Cesium.Math.toRadians(101.40431847311751),Cesium.Math.toRadians(38.53888153167521),
+        Cesium.Math.toRadians(101.4072890196015),Cesium.Math.toRadians(38.541096576445206));
+    var imagelayerMGW55b = new Cesium.ImageryLayer(new Cesium.UrlTemplateImageryProvider({
+        url: 'http://localhost:9002/api/wmts/gettile/5565933c31f2463995bab29468c4991c/{z}/{x}/{y}',
+        tilingScheme: new Cesium.WebMercatorTilingScheme(),
+        minimumLevel: 0,
+        rectangle:  rectangleMGW55b,
+        maximumLevel: 23,
+        credit: 'http://www.bjxbsj.cn',
+    }), {
+        show: true
+    });
+
+    //长城028影像
+    var rectangleMGW028 = new Cesium.Rectangle(Cesium.Math.toRadians(107.22297861276715),Cesium.Math.toRadians(37.93683210094714),
+        Cesium.Math.toRadians(107.22542394919842),Cesium.Math.toRadians(37.93863653959503));
+    var imagelayerMGW028 = new Cesium.ImageryLayer(new Cesium.UrlTemplateImageryProvider({
+        url: 'http://localhost:9002/api/wmts/gettile/a1ff58b393464cdebe76cc86f8c783fe/{z}/{x}/{y}',
+        tilingScheme: new Cesium.WebMercatorTilingScheme(),
+        minimumLevel: 0,
+        rectangle:  rectangleMGW028,
+        maximumLevel: 23,
+        credit: 'http://www.bjxbsj.cn',
+    }), {
+        show: true
+    });
+
+    //长城048影像 MGW048
+    var rectangleMGW048 = new Cesium.Rectangle(Cesium.Math.toRadians(101.96804866921498),Cesium.Math.toRadians(38.32095356123952),
+        Cesium.Math.toRadians(101.9724020183237),Cesium.Math.toRadians(38.32335130641988));
+    var imagelayerMGW048 = new Cesium.ImageryLayer(new Cesium.UrlTemplateImageryProvider({
+        url: 'http://localhost:9002/api/wmts/gettile/018779b124744319b4884fe7eb71698e/{z}/{x}/{y}',
+        tilingScheme: new Cesium.WebMercatorTilingScheme(),
+        minimumLevel: 0,
+        rectangle:  rectangleMGW048,
+        maximumLevel: 23,
+        credit: 'http://www.bjxbsj.cn',
+    }), {
+        show: true
+    });
+
+
+    //长城048倾斜
+    var longitudeQ048 = 101.97026011643224;
+    var latitudeQ048 = 38.32217858046906;
+    var heightQ048 = -2.675020437006852e-9;
+    var headingQ048 = 0;
+    var tilesetQ048 = new Cesium.Cesium3DTileset({
+        url: 'http://localhost:9002/api/folder/903eac3a9b0e4e0ca1cf4a0da7c71766/tileset.json'
+    });
+
+
+    //长城倾斜55b
+    var longitudeQ55b = 101.40585448582908;
+    var latitudeQ55b = 38.54008367011398;
+    var heightQ55b = 4.708708360827687e-9;
+    var headingQ55b = 0;
+    var tilesetQ55b = new Cesium.Cesium3DTileset({
+        url: 'http://localhost:9002/api/folder/d06f8f7b04dd4f208039d2d6d4972178/tileset.json'
+    });
+
+
+    //典型长城无人机倾斜摄影数据集_MGW004-3DMesh 倾斜
+    var longitude = 109.25318132821275;
+    var latitude = 38.02534426646268;
+    var height = 9.313225746154785e-10;
+    var heading = 0;
+    var tileset = new Cesium.Cesium3DTileset({
+        url: 'http://localhost:9002/api/folder/b5486082b520459fae98078bb5d86a3e/tileset.json'
+    });
+
+
+    var flag = true
+
+    $('.show').on('click',function () {
+        if(flag){
+            $('.menu').css({transform: 'translate(-85%,-50%)',transition:'0.3s'})
+            $('.menu img').css({transform: 'rotate(180deg)'})
+            flag = false
+        }else {
+            $('.menu').css({transform: 'translate(0,-50%)',transition:'0.3s'})
+            $('.menu img').css({transform: 'rotate(0deg)'})
+            flag = true
+        }
+
+
+    })
+    function goto(x){
+        switch(x)
+        {
+            case 1:
+                viewer.imageryLayers.add(imagelayerDxm);
+                viewer.scene.camera.flyTo({destination: rectangleDxm});
+                break;
+            case 2:
+                viewer.imageryLayers.add(imagelayerMGW004);
+                viewer.scene.camera.flyTo({destination: rectangleMGW004});
+                break;
+
+            case 3:
+                viewer.imageryLayers.add(imagelayerMGW55b);
+                viewer.scene.camera.flyTo({destination: rectangleMGW55b});
+                break;
+            case 4:
+                viewer.imageryLayers.add(imagelayerMGW028);
+                viewer.scene.camera.flyTo({destination: rectangleMGW028});
+                break;
+            case 5:
+                viewer.imageryLayers.add(imagelayerMGW048);
+                viewer.scene.camera.flyTo({destination: rectangleMGW048});
+                break;
+            case 6:
+                viewer.scene.primitives.add(tilesetQ048);
+                tilesetQ048.readyPromise.then(function(argument) {
+                    var position = Cesium.Cartesian3.fromDegrees(longitudeQ048, latitudeQ048, heightQ048);
+                    var mat = Cesium.Transforms.eastNorthUpToFixedFrame(position);
+                    var rotationX = Cesium.Matrix4.fromRotationTranslation(Cesium.Matrix3.fromRotationZ(Cesium.Math.toRadians(headingQ048)));
+                    Cesium.Matrix4.multiply(mat, rotationX, mat);
+                    tileset._root.transform = mat;
+                    viewer.camera.flyTo({destination: Cesium.Cartesian3.fromDegrees(longitudeQ048, latitudeQ048, heightQ048 + 2500)});
+                });
+                break;
+            case 7:
+                viewer.scene.primitives.add(tilesetQ55b);
+                tilesetQ55b.readyPromise.then(function(argument) {
+                    var position = Cesium.Cartesian3.fromDegrees(longitudeQ55b, latitudeQ55b, heightQ55b);
+                    var mat = Cesium.Transforms.eastNorthUpToFixedFrame(position);
+                    var rotationX = Cesium.Matrix4.fromRotationTranslation(Cesium.Matrix3.fromRotationZ(Cesium.Math.toRadians(headingQ55b)));
+                    Cesium.Matrix4.multiply(mat, rotationX, mat);
+                    tileset._root.transform = mat;
+                    viewer.camera.flyTo({
+                        destination: Cesium.Cartesian3.fromDegrees(longitudeQ55b, latitudeQ55b, heightQ55b + 2000)
+
+                    });
+                });
+                break;
+            case 8:
+                viewer.scene.primitives.add(tileset);
+                tileset.readyPromise.then(function(argument) {
+                    var position = Cesium.Cartesian3.fromDegrees(longitude, latitude, height);
+                    var mat = Cesium.Transforms.eastNorthUpToFixedFrame(position);
+                    var rotationX = Cesium.Matrix4.fromRotationTranslation(Cesium.Matrix3.fromRotationZ(Cesium.Math.toRadians(heading)));
+                    Cesium.Matrix4.multiply(mat, rotationX, mat);
+                    tileset._root.transform = mat;
+                    viewer.camera.flyTo({destination: Cesium.Cartesian3.fromDegrees(longitude, latitude, height + 2000)});
+                });
+                break;
+
+            case 0:
+
+                //viewer.imageryLayers.removeAll();
+                //viewer.imageryLayers.remove();
+                viewer.scene.camera.flyTo({
+                    destination :  Cesium.Cartesian3.fromDegrees(116.435314,39.960521, 18000000.0), // 设置位置
+                    orientation: {
+                        heading : Cesium.Math.toRadians(20.0), // 方向
+                        pitch : Cesium.Math.toRadians(-90.0),// 倾斜角度
+                        roll : 0
+                    },
+                    duration:3, // 设置飞行持续时间，默认会根据距离来计算
+                    complete: function () {
+                        // 到达位置后执行的回调函数
+                        //console.log('到达目的地');
+                    },
+                    cancle: function () {
+                        // 如果取消飞行则会调用此函数
+                        console.log('飞行取消')
+                    },
+                    pitchAdjustHeight: -90, // 如果摄像机飞越高于该值，则调整俯仰俯仰的俯仰角度，并将地球保持在视口中。
+                    maximumHeight:5000, // 相机最大飞行高度
+                    flyOverLongitude: 100, // 如果到达目的地有2种方式，设置具体值后会强制选择方向飞过这个经度
+                });
+
+
+                break;
+            default:
+                console("输入错误");
+        }
+
+    }
+</script>
+</body>
+</html>
