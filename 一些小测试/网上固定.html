@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <style type="text/css">
+        body{
+            width:40em;
+            margin:0 auto;
+        }
+        article{
+            float:left;
+        }
+        aside{
+            float:right;
+        }
+        p{
+            line-height:3em;
+        }
+    </style>
+</head>
+<body>
+<article>
+    <p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>内容</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p><p>这是一个段落</p>
+</article>
+<aside>
+    <p>这里会滚动</p><p>这里会滚动</p><p>这里会滚动</p>
+    <div id="fixPara"><p>这个段落到达一定高度会固定</p></div>
+</aside>
+<script type="text/javascript">
+    window.onload=
+        function(){
+            var oDiv = document.getElementById("fixPara"),
+                H = 0,
+                Y = oDiv
+            while (Y) {
+                H += Y.offsetTop;
+                Y = Y.offsetParent;
+            }
+            window.onscroll = function()
+            {
+                var s = document.body.scrollTop || document.documentElement.scrollTop
+                if(s>H) {
+                    oDiv.style = "position:fixed;top:0;"
+                } else {
+                    oDiv.style = ""
+                }
+            }
+        }
+</script>
+</body>
+</html>

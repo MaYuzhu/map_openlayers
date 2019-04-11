@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title>JS tooltip</title>
+    <style>
+        /* css style */
+        body{
+            width:200px;
+            margin:10px auto;
+        }
+        .ztip{
+            color:blue;
+        }
+        #ztip{
+            display:none;
+            position:absolute;
+            background-color:#000;
+            color:#fff;
+            padding:3px 5px;
+            font-size:12px;
+            border-radius:3px;
+            font-family:"Courier New" consolas;
+            display: inline-block;
+            text-align:center;
+        }
+        #ztip:after {
+            content:'';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-color: transparent;
+            border-style: solid;
+        }
+        #ztip.top:after {
+            bottom: 0;
+            left: 50%;
+            margin-left: -5px;
+            margin-bottom: -5px;
+            border-width: 5px 5px 0;
+            border-top-color: #000;
+        }
+        #ztip.bottom:after {
+            top: 0;
+            left: 50%;
+            margin-left: -5px;
+            margin-top: -5px;
+            border-width: 0 5px 5px;
+            border-bottom-color: #000;
+        }
+        #ztip.left:after {
+            top: 50%;
+            right: 0;
+            margin-top: -5px;
+            margin-right: -5px;
+            border-width: 5px 0 5px 5px;
+            border-left-color: #000;
+        }
+        #ztip.right:after {
+            top: 50%;
+            left: 0;
+            margin-top: -5px;
+            margin-left: -5px;
+            border-width: 5px 5px 5px 0;
+            border-right-color: #000;
+        }
+        #ztip.track{
+            text-align:left;
+        }
+        #ztip.track:after {
+            display:none;
+        }
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<h1 style="text-align:center;">JS tooltip</h1>
+
+<div>
+    Tight pants next level keffiyeh you probably haven't heard of them.
+    <span class="ztip" title="#divInfo">HTML内容</span>
+    booth beard raw denim letterpress vegan messenger bag stumptown.
+    Farm-to-table seitan, mcsweeney's
+    <span class="ztip" title="hello tooltip">普通Tooltip</span>
+    sustainable quinoa 8-bit american apparel have a terry richardson vinyl chambray.
+    Beard stumptown, cardigans banh mi lomo
+    <span class="ztip ztip-track" title="hello tooltip track">鼠标跟踪Tooltip</span>
+    . Tofu biodiesel williamsburg marfa, four loko mcsweeney's cleanse vegan chambray. A really
+    <span class="ztip" title="hello tooltip" data-ztip-arrow="top">top</span>
+    <span class="ztip" title="hello tooltip" data-ztip-arrow="bottom">bottom</span>
+    <span class="ztip" title="hello tooltip" data-ztip-arrow="left">left</span>
+    <span class="ztip" title="hello tooltip" data-ztip-arrow="right">right</span>
+    artisan whatever keytar, scenester <br>farm-to-table
+    <span class="ztip" data-ztip-width="100" title="hello tooltip<br>hello tooltip">折行Tooltip</span>
+    Austin twitter handle freegan cred raw denim single-origin coffee viral.
+</div>
+<p class="ztip ztip-track" title="Tight pants next level keffiyeh you probably haven't heard of them">Tight pants next level keffiyeh you probably haven't heard of them</p>
+<div id="divInfo" style="display:none;">
+    hello <b>hello</b><br>
+    <span style="color:red;">红色内容</span>
+</div>
+
+<script>
+    $(function(){
+        var ztipEl = null;
+        $('.ztip').hover(function(){
+            // 显示tooltip
+
+            // 创建显示对象
+            if (!ztipEl)
+            {
+                ztipEl = $('<div id="ztip"></div>');
+                $('body').append(ztipEl);
+            }
+
+            // 获取内容
+            var tip = $(this).data('ztip');
+            if (tip == '') return;
+            if (tip.indexOf('#') === 0)
+            {
+                tip = $(tip).html();
+            }
+            else
+            {
+                tip = tip.replace(/\\n/, '<br>');
+                tip = tip.replace(/\n/, '<br>');
+            }
+            ztipEl.html(tip);
+
+            // 是否鼠标跟随
+            if ($(this).hasClass('ztip-track'))
+            {
+                ztipEl.addClass('track');
+            }
+            else
+            {
+                ztipEl.removeClass('track');
+                var arrowClass = $(this).data('ztip-arrow')||'top';
+                ztipEl.removeClass('top').removeClass('bottom').removeClass('left').removeClass('right');
+                ztipEl.addClass(arrowClass);
+                var top = 0, left = 0;
+                if (arrowClass == 'top')
+                {
+                    top = $(this).offset().top - ztipEl.outerHeight() - 5;
+                    left = $(this).offset().left + $(this).width() / 2 - ztipEl.outerWidth() / 2;
+                }
+                else if (arrowClass == 'bottom')
+                {
+                    top = $(this).offset().top + $(this).height() + 5;
+                    left = $(this).offset().left + $(this).width() / 2 - ztipEl.outerWidth() / 2;
+                }
+                else if (arrowClass == 'left')
+                {
+                    top = $(this).offset().top + $(this).height() / 2 - ztipEl.outerHeight() / 2;
+                    left = $(this).offset().left - ztipEl.outerWidth() - 5;
+                }
+                else if (arrowClass == 'right')
+                {
+                    top = $(this).offset().top + $(this).height() / 2 - ztipEl.outerHeight() / 2;
+                    left = $(this).offset().left + $(this).width() + 5;
+                }
+                ztipEl.css({
+                    'top': Math.round(top) + 'px',
+                    'left': Math.round(left) + 'px',
+                });
+                ztipEl.show();
+            }
+        }, function(){
+            // 隐藏
+            ztipEl.hide();
+        }).mousemove(function(e){
+            // 跟随鼠标移动
+            if (!ztipEl.hasClass('track')) return;
+            e = e || window.event;
+            var x = e.pageX || e.clientX + document.body.scroolLeft;
+            var y = e.pageY || e.clientY + document.body.scrollTop;
+            var top = y + 10;
+            var left = x + 5;
+            ztipEl.css('top', top + 'px');
+            ztipEl.css('left', left + 'px');
+            ztipEl.show();
+        }).each(function(){
+            // 获取显示内容，并移除title
+            $(this).data('ztip', $(this).attr('title'));
+            $(this).attr('title', '');
+        });
+    });
+</script>
+
+</body>

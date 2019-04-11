@@ -1,0 +1,199 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9" />
+    <title>北京市建筑结构强震动监控平台</title>
+    <link href="css/index.css" rel="stylesheet" type="text/css"/>
+    <link href="css/map_ol.css" rel="stylesheet" type="text/css"/>
+    <link href="css/f/css.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="js/lib/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="js/lib/index/publicFun.js"></script>
+
+    <script type="text/javascript" src="js/lib/LAB.min.js"></script>
+    <script type="text/javascript" src="js/apply/hidden.js"></script>
+    <link type="text/css" href="js/lib/ExtJs/ext-theme-crisp/build/resources/ext-theme-crisp-all.css" rel="stylesheet" />
+    <!--<style type="text/css">
+        .r_n_q_s{ width:24px; height:23px; float:right; display:block;  background:url(images/i.png) no-repeat -199px -246px; margin:3px 5px 0 0}
+        .z_c_box{ width:320px; position:absolute; border:1px solid #078b7d;-moz-border-radius: 5px;-webkit-border-radius: 5px;border-radius:5px; -webkit-box-shadow: 1px 1px 1px #999;     -moz-box-shadow: 1px 1px 1px #999;   box-shadow: 1px 1px 1px #999; overflow:hidden; background:#fff;}
+        .z_c_box .zc_b_cn_c{  overflow-x:hidden; overflow-y:auto;}
+        .TCKtable .tb1 td{ background:url(images/i.png) repeat-x left -142px; height:28px; text-align:center; color:#0b6c75 }
+        .TCKtable .tb2 td{ background:url(images/i.png) repeat-x left -170px; height:28px; text-align:center; color:#666 }
+        .TCKtable .tb3 td{ background:url(images/i.png) repeat-x left -198px; height:28px; text-align:center; color:#666 }
+        .TCKtable .on td{background:url(images/i.png) repeat-x left -317px;color:#fff;  }
+        .TCKtable  td.boxb{ border-left:1px solid #cae4da; }
+        h1.h1{ height:31px; background-position: left -70px; font-size:14px; color:#fff; text-indent:12px; line-height:28px;background-image:url(images/i.png);}
+
+        /* 台阵数量格式 */
+        .text_ys{ font-size:14px; line-height:50px; text-align:center;}
+        .text_ys font{ padding:0 10px;}
+
+        /*EXTjs*/
+        /*tr.x-grid-record-white .x-grid-td { background: #ffffff;border:0; }*/
+    </style>-->
+
+</head>
+
+<body>
+<!--头-->
+<div class="hearder">
+    <p>
+
+    </p>
+    <ul>
+
+    </ul>
+    <div class="nav">
+        <a href="#"><span>首页</span></a><a
+            href="#">事件演示</a><a
+            href="#">报警处置</a>
+        <!--index_list start-->
+        <div id="index_list"
+              class="header-hidden">
+            <div>
+                <a href="#">北京市防震减灾中心</a>
+            </div>
+            <div>
+                <a href="">海淀区政府</a>
+            </div>
+            <div>
+                <a href="">昌平体育馆</a>
+            </div>
+        </div>
+        <!--index_list end-->
+    </div>
+    <!--m1 start-->
+    <div id="m1"
+          class="header-hidden">
+        <div>
+            <a href="#">参数设置</a>
+        </div>
+        <div>
+            <a href="#">用户管理</a>
+        </div>
+        <div>
+            <a href="#">退出</a>
+        </div>
+    </div>
+    <!--m1 end-->
+</div>
+<!--主体-->
+<div class="index-main">
+    <!--左侧-->
+    <!--地图文件可以放这里-->
+    <!--地图文件可以放这里-->
+    <!--地图文件可以放这里-->
+    <div class="index-left" id="map" style=" position: absolute; "></div>
+    <!--左侧-->
+
+    <!--右侧内容-->
+    <div class="index-right">
+        <div class="index-right-title">台阵当前状态</div>
+        <ul class="index-right-num" style="display:none">
+            <li class="index-right-num1" id="tzzt_zc"></li>
+            <li class="index-right-num2" id="tzzt_yj"></li>
+            <li class="index-right-num3" id="tzzt_ej"></li>
+            <li class="index-right-num4" id="tzzt_sj"></li>
+        </ul>
+        <ul class="index-right-num">
+            <li><h3>北京市防震减灾中心：正常</h3></li>
+        </ul>
+        <div class="index-right-title">报警统计</div>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0"
+               class="index-right-table">
+            <tr>
+                <th>设备名称</th>
+                <th>报警数量</th>
+                <th>设备总数量</th>
+            </tr>
+            <tr>
+                <td>加速度</td>
+                <td id="bjsl_jsd"></td>
+                <td id="zs_jsd"></td>
+            </tr>
+            <tr>
+                <td>北斗</td>
+                <td id="bjsl_bd"></td>
+                <td id="zs_bd"></td>
+            </tr>
+            <tr>
+                <td>倾斜</td>
+                <td id="bjsl_qx"></td>
+                <td id="zs_qx"></td>
+            </tr>
+            <tr>
+                <td>沉降</td>
+                <td id="bjsl_cj"></td>
+                <td id="zs_cj"></td>
+            </tr>
+            <tr>
+                <td>影像</td>
+                <td id="bjsl_yx"></td>
+                <td id="zs_yx"></td>
+            </tr>
+        </table>
+        <div class="index-right-title">
+            报警详情<a href="#">更多...</a>
+        </div>
+        <div class="index-right-list" id="alarmList">
+        </div>
+    </div>
+    <!-- 地图切换 -->
+    <div id="mapController" class="all_path" style="position: absolute; top: 134px; left: 86px; z-index: 1100;">
+        <div>
+            <div id="mapTypeDiv" class="allp" style="width: 70px; height: 60px;">
+                <div id="map_type_vector" class="pub_path1" style="display: none;" onclick="javascript:typeSwitch('img');">
+                    <div class="hoverType">
+                        <div class="map_top">
+                            <div class="vecType">
+                            </div>
+                            <div class="map_bom">
+                                地图
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="map_type_image" class="pub_path1" style="" onclick="javascript:typeSwitch('vector');">
+                    <div class="hoverType">
+                        <div class="map_top">
+                            <div class="imgType">
+                            </div>
+                            <div class="map_bom">
+                                影像
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 地图切换 -->
+</div>
+<script type="text/javascript">
+    // 		$LAB
+    // 			.script("js/lib/OpenLayers.js")
+    // 			.script("js/lib/ExtJs/ext-all.js")
+    // 			.script("js/lib/ExtJs/ext-locale-zh_CN.js")
+    // 			.script("js/lib/map/indexHouse.js")
+    // 			.script("js/lib/map/mapHouse.js")
+    // 			.wait()
+    // 			.wait(function(){
+    // 				init();
+    // 			})
+</script>
+<script type="text/javascript">
+    // 		$(document).ready(function($){
+    // 			$('.grid-container').gridQuote();
+    // 		});
+</script>
+<script type="text/javascript" src="js/lib/OpenLayers.js"></script>
+<script type="text/javascript" src="js/lib/ExtJs/ext-all.js"></script>
+<script type="text/javascript" src="js/lib/ExtJs/ext-locale-zh_CN.js"></script>
+<script type="text/javascript" src="js/lib/index/publicFun.js"></script>
+
+<script type="text/javascript" src="./libs/mapHouse.js"></script>
+<script type="text/javascript" src="js/lib/map/indexHouse.js"></script>
+
+</body>
+</html>

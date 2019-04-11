@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .form-group{
+            margin: 10px 50px;
+        }
+        .form-group button{
+            background: #009400;
+            padding: 5px 10px;
+            border-radius: 10px;
+            color: white;
+            border: 1px solid;
+            cursor: pointer;
+            outline: none;
+        }
+        table{
+            border: 1px solid #999;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        table th{
+            padding: 2px 0;
+            border: 1px solid #999;
+            background: #42B983;
+            color:white;
+        }
+        table td{
+            border: 1px solid #999;
+            padding: 6px 0;
+        }
+        .text-center{
+            text-align: center;
+        }
+        table button{
+            color: #dfdfdf;
+            background: #bc171d;
+            padding: 5px 10px;
+            border-radius: 10px;
+            border: 1px solid #b40000;
+            cursor: pointer;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+<div id="app">
+
+    <fieldset style="border-radius: 18px">
+        <legend style="margin-left: 20px">
+            创建新人员
+        </legend>
+        <div class="form-group">
+            <label>姓名:</label>
+            <input type="text" v-model="newPerson.name"/>
+        </div>
+        <div class="form-group">
+            <label>年龄:</label>
+            <input type="text" v-model="newPerson.age"/>
+        </div>
+        <div class="form-group">
+            <label>性别:</label>
+            <select v-model="newPerson.sex">
+                <option value="男">男</option>
+                <option value="女">女</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label></label>
+            <button @click="createPerson">新增</button>
+        </div>
+    </fieldset>
+    <table style="width: 100%">
+        <thead>
+        <tr>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>性别</th>
+            <th>删除</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(person,index) in people">
+            <td>{{ person.name }}</td>
+            <td>{{ person.age }}</td>
+            <td>{{ person.sex }}</td>
+            <td class='text-center'><button @click="deletePerson(index)">删除</button></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<script src="js/vue.min.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            newPerson: {
+                name: '',
+                age: 0,
+                sex: '男'
+            },
+            people: [{
+                name: '张三',
+                age: 30,
+                sex: '男'
+            }, {
+                name: '张翠山',
+                age: 26,
+                sex: '男'
+            }, {
+                name: '殷素素',
+                age: 22,
+                sex: '女'
+            }, {
+                name: '张无忌',
+                age: 12,
+                sex: '男'
+            }]
+        },
+        methods:{
+            createPerson: function(){
+                this.people.push(this.newPerson);
+                // 添加完newPerson对象后，重置newPerson对象
+                this.newPerson = {name: '', age: 0, sex: '男'}
+            },
+            deletePerson: function(index){
+                // 删一个数组元素
+                this.people.splice(index,1);
+            }
+        }
+    })
+</script>
+
+</html>

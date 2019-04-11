@@ -1,0 +1,118 @@
+<!doctype html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>TEST</title>
+</head>
+<style type="text/css">
+    .box{height:100px;width:100px;background:orange;position:relative;margin:40px;}
+
+    .move{height:20px;width:20px;background:red;position:absolute;left:0px;top:0px;display:none;}
+
+</style>
+<script type="text/javascript">
+    window.onload = function(){
+
+//获取要执行事件的元素
+
+        var oWrap = document.getElementById('wrap');
+
+//在IE8下不支持 getElementsByClassName，请自行写个函数或用其它方式代替
+
+        var aBox = oWrap.getElementsByClassName('box');
+
+        var aMove = oWrap.getElementsByClassName('move');
+
+//遍历所有的box元素
+
+        for(var i=0; i<aBox.length ; i++){
+
+            //获取当前触发事件的元素
+
+            (function(i){
+
+                //在box元素范围内移动的时候那么就会产生相应的数值
+
+                aBox[i].onmousemove=function(ev){
+
+                    var oEvent = ev || event;
+
+                    //获取鼠标的当前位置
+
+                    var disX = oEvent.clientX - aBox[i].offsetLeft;
+
+                    var disY = oEvent.clientY - aBox[i].offsetTop;
+
+                    //如果鼠标位置超出了范围那么就让隐藏
+
+                    if (disX >= this.offsetWidth) {
+
+                        aMove[i].style.display = 'none';
+
+                    }else if (disY >= this.offsetHeight) {
+
+                        aMove[i].style.display='none';
+
+                    };
+
+                    //定义move元素移动的位置
+
+                    aMove[i].style.left = disX + 'px';
+
+                    aMove[i].style.top = disY + 'px';
+
+                }
+
+                //鼠标进入的时候显示
+
+                aBox[i].onmouseover = function(){
+
+                    aMove[i].style.display = 'block';
+
+                }
+
+                //鼠标移除的时候隐藏
+
+                aBox[i].onmouseout = function(){
+
+                    aMove[i].style.display = 'none';
+
+                }
+
+            })(i)
+
+        }
+
+    }
+</script>
+<body>
+<div id="wrap">
+
+
+
+    <div class="box">
+
+        <div class="move">提示</div>
+
+    </div>
+
+
+
+    <div class="box">
+
+        <div class="move">提示</div>
+
+    </div>
+
+
+
+    <div class="box">
+
+        <div class="move">提示</div>
+
+    </div>
+
+
+
+</div>
+</body>
+</html>

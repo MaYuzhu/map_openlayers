@@ -1,0 +1,130 @@
+*{margin: 0;padding: 0;list-style: none;}
+*, *:before, *:after {-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
+BODY,DIV,UL,LI,FORM,INPUT,SPAN,P,A,DL,DT,DD,H1,H2,H3,IFRAME,NAV{margin:0px;padding:0px;list-style-type:none;font-family: "Microsoft YaHei";}
+body{color: #333;background-color: #fff; height: 100%; margin:0 auto; padding:0;}
+html{ height: 100%;}
+a:link,a:visited{color: #333;text-decoration: none;}
+a:hover{color: #0099E5;text-decoration: none;}
+img{border:none;max-width:100%;}
+input{outline:none;}
+.login-hearder {
+	
+	background-color: #28596e;
+	background-image:url(../images/login_logo.png);
+	background-repeat:no-repeat;
+	background-position:3% center; 
+	height:10%;
+}
+.login-img {
+	/* margin: auto; */
+	clear: both;
+	 height: 90%;
+	/* width: 1200px;  */
+	 background-image: url(../images/login_02.png); 
+	background-repeat: no-repeat;
+	background-position: center center;
+	padding-top: 180px;
+	background-size:cover;
+}
+.login {
+	background-image: url(../images/login.png); 
+	background-repeat: no-repeat;
+	background-position: center top;
+	margin: auto;
+	height: 310px;
+	width: 350px;
+	padding-top: 30px;
+	padding-right: 30px;
+	padding-left: 30px;
+}
+.login-input ul li {height: 55px;position: relative;}
+.login-input ul li input[type=text] {
+	height: 35px;
+	border: 1px solid #D3D1CE;
+	width: 100%;
+	padding-right: 35px;
+	padding-left: 15px;
+	color: #8B8B8B;
+}
+.login-input ul li input[type=password] {
+	height: 35px;
+	border: 1px solid #D3D1CE;
+	width: 100%;
+	padding-right: 35px;
+	padding-left: 15px;
+	color: #8B8B8B;
+}
+.login-input ul li img {
+	position: absolute;
+	top: 9px;
+	right: 9px;
+	z-index: 200;
+}
+.login-input section {font-size: 12px;clear: both;height: 40px;}
+.login-input section article {float: left;color: #8B8B8B;}
+.login-input section div {float: right;color: #3F91BD;}
+.login-input section div a {color: #3F91BD;}
+.option-input {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	-o-appearance: none;
+	appearance: none;
+	position: relative;
+	top: 0px;
+	width: 16px;
+	height: 16px;
+	background: #fff;
+	border: none;
+	color: #4091BD;
+	cursor: pointer;
+	outline: none;
+	position: relative;
+	margin-right: 6px;
+	z-index: 1000;
+	vertical-align: -20%;
+	border: 1px solid #4091BD;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	font-size: 10px;
+	padding-top: 2px;
+}
+.option-input:hover {background-color: #FFFFFF;border: 1px solid #4091BD;}
+.option-input:checked {background-color: #FFFFFF;}
+.option-input:checked::before {
+	width: 10px;
+	height: 10px;
+	position: absolute;
+	content: '\2714';
+	display: inline-block;
+	font-size: 10px;
+	text-align: center;
+	line-height: 10px;
+	left: 2px;
+	top: 2pxe;
+}
+.option-input:checked::after {
+	-webkit-animation: click-wave 0.65s;
+	-moz-animation: click-wave 0.65s;
+	animation: click-wave 0.65s;
+	content: '';
+	display: block;
+	position: relative;
+	z-index: 100;
+	background-color: #327fbc;
+}
+.option-input.radio {border-radius: 50%;}
+.option-input.radio::after {border-radius: 50%;}
+.login-input div input[type=submit] {
+	height: 35px;
+	width: 100%;
+	font-size: 14px;
+	color: #FFF;
+	background-color: #4091BD;
+	border: 0px none #FFF;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	line-height: 33px;
+}

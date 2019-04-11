@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表格</title>
+    <style type="text/css">
+        body{
+            padding: 0px;
+            margin: 0;
+            /*position: relative;*/
+        }
+        p{
+            position: fixed;
+            top:0;
+            background: #a257a4;
+            width: 100%;
+            padding: 5px 0;
+            margin: 0;
+            color: white;
+            z-index: 20;
+        }
+        .position{
+            position: fixed;
+            top:31px;
+            width: 100%;
+        }
+        .position th{
+            width: 230px;
+        }
+        #table1{
+            margin-top: 62px;
+        }
+        table{
+            width: 100%;
+            border: 1px solid #999;
+            border-collapse: collapse;
+        }
+        table th{
+            padding: 5px 0;
+            border: 1px solid #999;
+            background: #6570b9;
+            color:white;
+            width: 230px;
+        }
+        table td{
+            border: 1px solid #999;
+            padding: 12px 0;
+            width: 230px;
+        }
+        #table1>tbody>:nth-child(1){
+            position: fixed;
+            top:31px;
+            box-sizing: border-box;
+        }
+        a{
+            position: absolute;
+            position: fixed;
+        }
+    </style>
+</head>
+<body>
+    <p class="p">排行</p>
+    <table id="table1">
+        <tr>
+            <th>东部球队</th>
+            <th>胜</th>
+            <th>负</th>
+            <th>胜率</th>
+            <th>胜差</th>
+        </tr>
+        <tr>
+            <td>雄鹿</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>猛龙</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>步行者</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>76人</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>绿凯</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>雄鹿</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>猛龙</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>步行者</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>76人</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>绿凯</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>雄鹿</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>猛龙</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>步行者</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>76人</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>绿凯</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>雄鹿</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>猛龙</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>步行者</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>76人</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>绿凯</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+    </table>
+    <table id="table2">
+        <tr>
+            <th  style="background: #a90822">西部球队</th>
+            <th  style="background: #a90822">胜</th>
+            <th  style="background: #a90822">负</th>
+            <th  style="background: #a90822">胜率</th>
+            <th  style="background: #a90822">胜差</th>
+        </tr>
+
+        <tr>
+            <td>勇士</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>掘金</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>雷霆</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>开拓者</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>火箭</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>爵士</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>马刺</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>快船</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>勇士</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>掘金</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>雷霆</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>开拓者</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>火箭</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>爵士</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>马刺</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>快船</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>勇士</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>掘金</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>雷霆</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>开拓者</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>火箭</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>爵士</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>马刺</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>快船</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>勇士</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>掘金</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>雷霆</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>开拓者</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>火箭</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>爵士</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>马刺</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>快船</td>
+            <td>25</td>
+            <td>3</td>
+            <td>89%</td>
+            <td>0</td>
+        </tr>
+    </table>
+</body>
+<script src="jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+    window.onload =
+        function(){
+            var oDiv = document.getElementById("table1"),
+                H = 0,
+                Y = oDiv
+            while (Y) {
+                H += Y.offsetTop;
+                Y = Y.offsetParent;
+            }
+
+            var table2 = document.getElementById("table2"),
+                H2 = 0,
+                Y2 = table2
+            while (Y2) {
+                H2 += Y2.offsetTop;
+                Y2 = Y2.offsetParent;
+            }
+            window.onscroll = function(){
+                var s = document.body.scrollTop || document.documentElement.scrollTop
+
+                console.log('s=',s)//
+                //console.log('H2=',H2)//   H2==>984
+                if(s>984-62 && s<=984-31){
+                    console.log('大于984')
+                    $('#table1>tbody>:nth-child(1)').css({
+                        position: 'fixed',
+                        top:`${951-s}px`,
+                        zIndex:2
+                    })
+                }else if(s>984-31){
+                    console.log('大于1200')
+                    $('#table2>tbody>:nth-child(1)').css({
+                        position: 'fixed',
+                        top:31,
+                    })
+                }else {
+                    $('#table2>tbody>:nth-child(1)').css({
+                        position: 'static',
+                    })
+                    $('#table1>tbody>:nth-child(1)').css({
+                        position: 'fixed',
+                        top:31
+                    })
+                }
+
+                /*if(s>H) {
+                    $('#table1>tbody>:nth-child(1)').addClass('position')
+                } else{
+                    $('#table1>tbody>:nth-child(1)').removeClass('position')
+                }
+                if(s+62>H2){
+                    $('#table2>tbody>:nth-child(1)').addClass('position')
+                    $('#table1>tbody>:nth-child(1)').removeClass('position')
+                }else if(s+62<H2){
+                    $('#table2>tbody>:nth-child(1)').removeClass('position')
+                    $('#table1>tbody>:nth-child(1)').removeClass('position')
+                }*/
+            }
+        }
+</script>
+</html>

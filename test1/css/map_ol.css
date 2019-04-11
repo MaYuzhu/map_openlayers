@@ -1,0 +1,110 @@
+
+div.olControlMousePosition {
+    bottom: 30px;
+    left: 100px;
+    display: block;
+    position: absolute;
+    font-family: Arial;
+    font-size: smaller;
+}
+.olControlScale {
+    left: 3px;
+    bottom: 25px;
+    display: block;
+    position: absolute;
+    font-size: smaller;
+}
+.olControlScaleLine {
+   display: block;
+   position: absolute;
+   left: 10px;
+   bottom: 25px;
+   font-size: xx-small;
+}
+.olControlScaleLineBottom {
+   border: solid 2px black;
+   border-bottom: none;
+   margin-top:-2px;
+   text-align: center;
+}
+.olControlScaleLineTop {
+   border: solid 2px black;
+   border-top: none;
+   text-align: center;
+}
+
+.olControlOverviewMapContainer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background:url("../images/map/overview/over.png");
+}
+
+.olControlOverviewMapElement {
+    padding: 8px 8px 8px 8px;
+    background:#ffff;
+    -moz-border-radius: 1em 0 0 0;
+}
+
+.olControlOverviewMapMinimizeButton {
+    right: 0;
+    bottom: 0;
+    background:url("../images/map/overview/open.png");
+    cursor: pointer;
+}    
+
+.olControlOverviewMapMaximizeButton {
+    right: 0;
+    bottom: 0;
+    background:url("../images/map/overview/close.png");
+    cursor: pointer;
+}
+
+.olControlOverviewMapExtentRectangle {
+    overflow: hidden;
+    background-image: url("../images/openlayers/img/blank.gif");
+    cursor: move;
+    border: 2px dotted red;
+}
+.olControlOverviewMapRectReplacement {
+    overflow: hidden;
+    cursor: move;
+    background-image: url("../images/map/overview/rect.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.olPopupCloseBox {
+  background: url("../images/map/index/close.gif");
+  cursor: pointer;
+}
+#buttonDiv{
+	position:absolute;
+	right:29px;
+	top:300px;
+	height:82px;
+	width:41px;
+	z-index:1002;
+}
+#panDiv{
+	position:absolute;
+	/* margin-left:235px; */
+	right:5px;
+	bottom:2px;
+	height:auto;;
+	width:auto;;
+    z-index:1003;
+}
+/**�Ҽ�����ʽ*/
+.mouseRightFun{
+	padding:5px 5px;
+	text-align:center;
+}
+.mouseRightFun li{
+	height:20px;
+	cursor:pointer;
+}
+.mouseRightFun li:hover{
+	color:green;
+	cursor:pointer;
+}

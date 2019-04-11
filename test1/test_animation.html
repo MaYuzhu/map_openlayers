@@ -40,7 +40,10 @@
 
 </body>
 <script>
-    /*放大缩小等*/
+    var view = new ol.View({
+        center:[12950000,4860000],
+        zoom:7,
+    })
     var map = new ol.Map({
         target:'map',
         layers:[
@@ -48,18 +51,128 @@
                 source:new ol.source.OSM()
             })
         ],
-        view:new ol.View({
-            center:[12950000,4860000],
-            zoom:8,
-            minZoom:1,
-            maxZoom:12,
-            rotation:Math.PI*2
-        })
+        view:view,
+        loadTilesWhileAnimating:true,
+
     })
 
+    //各定位点
+    var shenyang = ol.proj.fromLonLat([123.24,41.50])
+    var beijing = ol.proj.fromLonLat([116.28,39.54])
+    var shanghai = ol.proj.fromLonLat([121.29,31.14])
+    var wuhan = ol.proj.fromLonLat([114.21,30.37])
+    var guangzhou = ol.proj.fromLonLat([113.15,23.08])
+    var haikou = ol.proj.fromLonLat([110.20,20.02])
+    //旋转动画
+    document.getElementById('rotate').onclick = function () {
+        var rotate = ol.animation.rotate({
+            duration:2000,
+            rotation:-1.5 * Math.PI
+        })
+        map.beforeRender(rotate)
+        view.setCenter(shenyang)
+    }
+    //弹性
+    document.getElementById('elastic').onclick = function () {
+        var pan = ol.animation.pan({
+            duration:2000,
+            easing:elastic,
+            source:view.getCenter()
+        })
+        map.beforeRender(pan)
+        view.setCenter(beijing)
+    }
+    function elastic(t) {
+        return Math.pow(2,-10*t) * Math.sin((t-0.075)*(2*Math.PI)/0.3) + 1
+    }
 
+    //反弹
+    document.getElementById('bounce').onclick = function () {
+        var pan = ol.animation.pan({
+            duration:2000,
+            easing:bounce,
+            source:view.getCenter()
+        })
+        map.beforeRender(pan)
+        view.setCenter(shanghai)
+    }
+    function bounce(t) {
+        let s = 7.5625, p=2.75, l
+        if(t<(1/p)){
+            l = s * t * t
+        }else {
+            if(t<(2/p)){
+                t -= (1.5/p)
+                l = s * t * t + 0.75
+            }else {
+                if(t<(2.5/p)){
+                    t -= (2.25/p)
+                    l = s * t * t + 0.9375
+                }else{
+                    t -= (2.625/p)
+                    l = s * t * t + 0.984375
+                }
+            }
+        }
+        return l
+    }
 
+    //自旋动画
+    document.getElementById('spin').onclick = function () {
+        const duration = 2000
+        const start = +new Date()
+        let pan = ol.animation.pan({
+            duration : duration,
+            source : view.getCenter(),
+            start : start
+        })
+        var rotate = ol.animation.rotate({
+            duration:duration,
+            rotation:2 * Math.PI,
+            start:start
+        })
+        map.beforeRender(pan,rotate)
+        view.setCenter(wuhan)
+    }
 
+    //飞行
+    document.getElementById('fly').onclick = function () {
+        var start = +new Date()
+        var pan = ol.animation.pan({
+            duration:2000,
+            source:view.getCenter(),
+            start:start
+        })
+        var bounce = ol.animation.bounce({
+            duration:2000,
+            resolution: 2 * view.getResolution(),
+            start:start
+        })
+        map.beforeRender(pan,bounce)
+        view.setCenter(guangzhou)
+    }
+
+    //螺旋
+    document.getElementById('spiral').onclick = function () {
+        var start = +new Date()
+        var pan = ol.animation.pan({
+            duration:2000,
+            source:view.getCenter(),
+            start:start
+        })
+        var bounce = ol.animation.bounce({
+            duration:2000,
+            resolution: 2 * view.getResolution(),
+            start:start
+        })
+        var rotate = ol.animation.rotate({
+            duration:2000,
+            rotation: -2 * Math.PI,
+            start:start
+        })
+        map.beforeRender(pan,bounce,rotate)
+        view.setCenter(haikou)
+    }
 </script>
 
 </html>

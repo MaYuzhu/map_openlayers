@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>加载天地图</title>
+    <script type="text/javascript" src="http://api.tianditu.gov.cn/getscript?v=3.0&tk=207653a6c628d6e51d1cd31598ae0b9f
+"></script>
+</head>
+<body>
+<style type="text/css">
+    #mapDiv{
+        height:600px;
+        border: 1px solid #ccc;
+        margin: 10px;
+
+    }
+</style>
+<div id="mapDiv"></div>
+<script type="text/javascript">
+    function loadMap(){//加载基本地图和导航  
+        try {
+            map = new TMap("mapDiv"); //初始化地图对象  
+            map.centerAndZoom(new TLngLat(103.388611,35.563611), 4);//设置显示地图的中心点和级别-中国
+            map.enableHandleMouseScroll(); //允许鼠标双击放大地图     
+        } catch(err) {
+            alert('图加载不成功，请稍候再试！你可以先使用其他功能！');
+        }
+    }
+    loadMap();
+</script>
+</body>
+</html>  

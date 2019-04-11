@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html >
+<meta charset="utf-8">
+<head>
+
+        <title>CSS3实现鼠标移上去显示全部内容</title>
+
+        <style type="text/css">
+            #container{
+                text-overflow:ellipsis;
+                overflow:hidden;
+                white-space:nowrap;
+                border:1px solid gray;
+                width:300px;
+                padding:20px;
+                color:rgba(0,0,0,0.7);
+                cursor:pointer;
+            }
+            #container:hover {
+                white-space:normal;
+                height:148px;
+                background-color:#F2F9F9;
+                transition-property:background-color,height;
+                transition-duration:0.2s;
+                transition-timing-function:linear;
+            }
+        </style>
+
+</head>
+
+<body>
+
+    <div id="container">绿叶学习网成立于2015年4月1日，是一个富有活力的技术学习网站。绿叶学习网为广大网络工作者（网页开发人员、站长等）提供各种精品教程以及最精华资料。绿叶学习网跟其他垃圾采集站不一样，绿叶学习网中的每一个课程、每一篇文章，甚至每一个知识点，都凝聚了本人的最辛勤的汗水。</div>
+
+</body>
+
+</html>
