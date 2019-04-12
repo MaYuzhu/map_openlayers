@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hello 3D Earth</title>
+    <title>3D Earth</title>
 
     <script src="./CesiumUnminified/Cesium.js"></script>
     <script src="jquery-1.11.3.min.js"></script>
@@ -58,7 +58,7 @@
         .show{
             position: absolute;
             top: 50%;
-            transform: translate(0,-50%);
+            transform: translate(5px,-50%);
             right: 3px;
             cursor: pointer;
         }
@@ -219,7 +219,7 @@
 
     $('.show').on('click',function () {
         if(flag){
-            $('.menu').css({transform: 'translate(-85%,-50%)',transition:'0.3s'})
+            $('.menu').css({transform: 'translate(-88%,-50%)',transition:'0.3s'})
             $('.menu img').css({transform: 'rotate(180deg)'})
             flag = false
         }else {
