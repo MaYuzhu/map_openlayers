@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>中英文切换</title>
+    <meta charset="UTF-8" />
+    <script type="text/javascript" src="./tianqi/js/jquery-1.11.3.min.js"></script>
+
+    <script type="text/javascript" src="./tianqi/js/translate.js"></script>
+    <script type="text/javascript" src="./tianqi/js/language.js"></script>
+</head>
+
+<body>
+<button id="change">中文</button>
+<button id="english">日本语</button>
+<div style="text-align: center">
+    你好
+</div>
+<p>
+    在这轮系列赛的第三场比赛中，欧文虽然拿了29分但22投仅8中，赛后他信誓旦旦地表示，自己不会再来22投8中这样的表现了。结果在系列赛的第四场比赛中，欧文仅打出22投7中的表现。
+
+    凯尔特人连输三场，欧文在这三场比赛中未能起到领军作用，让他遭遇了大量的批评。所以今天这场比赛不仅是凯尔特人的绝境之战，同时也是欧文的救赎之战，他能完成自我救赎吗？
+
+    本场比赛一上来欧文就出现传球失误，接着他又连续两次跳投打铁，直到首节进行到7分20秒时，他才利用一次抛投打破个人得分荒。在首节所打的11分钟里，欧文9投2中、罚球2中2仅得到6分，难道他又要来一场打铁之战？
+
+    自己手感不佳、凯尔特人处于劣势，这些因素似乎让欧文越打越焦急。
+</p>
+
+</body>
+<script type="text/javascript">
+    $("#change").click(function() {
+        translate(0);
+    })
+    $("#english").click(function() {
+        translate(1);
+    })
+
+</script>
+
+</html>

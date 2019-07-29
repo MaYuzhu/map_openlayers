@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"  style="width: 100%; height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="./lib/g.css">
+    <script type="text/javascript" src="./lib/g.min.js"></script>
+</head>
+<body style="width: 100%; height: 100%;">
+    <div id="mapContainer" style="width: 100%; height: 100%;"></div>
+</body>
+<script type="text/javascript">
+    var map, tileLayer;
+    G.ready(function() { // 此时类库加载完成
+
+        map = new G.Map('mapContainer');
+
+        tileLayer = new G.Layer.Tile('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            cluster: ['a', 'b', 'c']
+        });
+        tileLayer.addTo(map);
+
+        var layer = new G.Layer.Tile('https://geohey.com/s/dataviz/888ebaeaa8ebc44228b8e966628ee73b/{z}/{x}/{y}.png?retina=&ak=NThmMTQxYTljMjQ3NDZiZTk0YTM4MWU5YzEzN2RlOWY', {
+            cluster: ['a', 'b', 'c']
+        });
+        layer.addTo(map);
+    });
+</script>
+</html>

@@ -66,6 +66,61 @@
             width: 34px;
         }
 
+        .leaflet-popup {
+            position: absolute;
+            text-align: center;
+        }
+        .leaflet-popup-close-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 4px 4px 0 0;
+            text-align: center;
+            width: 18px;
+            height: 14px;
+            font: 16px/14px Tahoma, Verdana, sans-serif;
+            color: #c3c3c3;
+            text-decoration: none;
+            font-weight: bold;
+            background: transparent;
+        }
+        .leaflet-popup-content-wrapper {
+            text-align: center;
+            max-height: 200px;
+            overflow-y: auto;
+            background: white;
+            box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+            padding: 1px;
+            text-align: left;
+            border-radius: 12px;
+        }
+        .leaflet-popup-content {
+            margin: 13px 19px;
+            line-height: 1.4;
+        }
+        .leaflet-popup-tip-container {
+            margin: 0 auto;
+            width: 200px;
+            height: 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        .leaflet-popup-tip {
+            background: white;
+            box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+            width: 17px;
+            height: 17px;
+            padding: 1px;
+            margin: -10px auto 0;
+            -webkit-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            -o-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+
+
+
     </style>
 </head>
 <body>
@@ -99,17 +154,218 @@
             lis[i].classList.add('on')
         })
     }
-    var viewer = new Cesium.Viewer("cesiumContainer", {
-        animation: false, //是否显示动画控件(左下方那个)
-        baseLayerPicker: true, //是否显示图层选择控件
-        geocoder: true, //是否显示地名查找控件
-        timeline: true, //是否显示时间线控件
-        sceneModePicker: true, //是否显示投影方式控件
-        navigationHelpButton: false, //是否显示帮助信息控件
-        infoBox: true, //是否显示点击要素之后显示的信息
+    //我的token 申请的
+    Cesium.Ion.defaultAccessToken='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4Y2Y4OGI0Ni0zMjhiLTQ1YjQtOTk2My05ZmZhNjBhNWY2MjgiLCJpZCI6MTIxODgsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1NjA1MDMzNTR9.dQ1aEUqUCYzl1L5e0MpF24ZJJXJFSwyx6VKrSgVZwPk'
+
+    var geourl = 'http://36.110.66.218:8081/s/dataviz/c7169d917cccdfff24deec7ab084f914/{z}/{x}/{y}.png?retina=&ak=OWJhNTU0ZDg5OTFhNDMzMTkzNDU0OWUwNjhhNDI2NDQ'
+    //var geourl = 'http://36.110.66.218:8081/apps/dataviz/750f5ccdcdbb420bb5b34faebec5a772/share?ak=OWJhNTU0ZDg5OTFhNDMzMTkzNDU0OWUwNjhhNDI2NDQ'
+    var url='http://192.168.20.41:8080/geoserver/heritage/wms';
+
+    //地形数据
+    var terrainProvider = new Cesium.CesiumTerrainProvider({
+        url:'http://192.168.20.26/test'
+    })
+
+    var viewer = new Cesium.Viewer('cesiumContainer',
+        {
+            infoBox: true,
+            baseLayerPicker:false,
+            terrainProvider:terrainProvider
+        }
+        /*{
+
+            animation: false, //是否显示动画控件
+            shouldAnimate : true,
+            homeButton: false, //是否显示Home按钮
+            fullscreenButton: false, //是否显示全屏按钮
+            baseLayerPicker: false, //是否显示图层选择控件
+            geocoder: false, //是否显示地名查找控件
+            timeline: false, //是否显示时间线控件
+            sceneModePicker: true, //是否显示投影方式控件
+            navigationHelpButton: false, //是否显示帮助信息控件
+            infoBox: false, //是否显示点击要素之后显示的信息
+            requestRenderMode: true, //启用请求渲染模式
+            scene3DOnly: false, //每个几何实例将只能以3D渲染以节省GPU内存
+            sceneMode: 3, //初始场景模式 1 2D模式 2 2D循环模式 3 3D模式  Cesium.SceneMode
+            fullscreenElement: document.body, //全屏时渲染的HTML元素 暂时没发现用处
+            imageryProvider:new Cesium.UrlTemplateImageryProvider({
+                url:"http://mt1.google.cn/vt/lyrs=s&hl=zh-CN&x={x}&y={y}&z={z}&s=Gali"
+            })
+        /!*imageryProvider:new Cesium.UrlTemplateImageryProvider({
+            url:'http://36.110.66.218:8081/s/mapviz/750f5ccdcdbb420bb5b34faebec5a772/' +
+            '/mapserver/{z}/{x}/{y}.png?ak=OWJhNTU0ZDg5OTFhNDMzMTkzNDU0OWUwNjhhNDI2NDQ'
+        })*!/
+        }*/
+    );
+    var provider = new Cesium.WebMapServiceImageryProvider({
+        url: url,
+        layers: 'heritage:WorldHeritageSites',
+        //layers: 'heritage:IUCN-NaturalWHS-Area',
+        parameters: {
+        service : 'WMS',
+        format: 'image/png',
+        transparent: true,
+    }
     });
 
+//http://36.110.66.218:8081/apps/dataviz/750f5ccdcdbb420bb5b34faebec5a772/share?ak=OWJhNTU0ZDg5OTFhNDMzMTkzNDU0OWUwNjhhNDI2NDQ
+    var url1 = 'http://36.110.66.218:8081/s/mapviz/750f5ccdcdbb420bb5b34faebec5a772/' +
+        '/mapserver/{z}/{x}/{y}.png?ak=NThmMTQxYTljMjQ3NDZiZTk0YTM4MWU5YzEzN2RlOWY';
+    //ajax_geo_map('http://36.110.66.218:8081/s/mapviz/750f5ccdcdbb420bb5b34faebec5a772/mapserver/config?ak=NThmMTQxYTljMjQ3NDZiZTk0YTM4MWU5YzEzN2RlOWY','750f5ccdcdbb420bb5b34faebec5a772')
+    //https://geohey.com/apps/dataviz/31062030e4bb4f1fb1e2c74f6c0f2ebf/
+    // share?ak=OGJkMGQwNTVlNzYzNDA0NmIwNDYxZDY4YjQwYmJlYzc
 
+    ajax_geo_map('https://geohey.com/s/mapviz/31062030e4bb4f1fb1e2c74f6c0f2ebf/mapserver/config?ak=OGJkMGQwNTVlNzYzNDA0NmIwNDYxZDY4YjQwYmJlYzc','31062030e4bb4f1fb1e2c74f6c0f2ebf')
+
+    function ajax_geo_map(url,uid) {
+        $.ajax({
+            type:"POST",
+            url:url,
+            async: false,
+            cache: true,
+            dataType: 'json',
+            data:{uid:uid},
+            success: function (json) {
+                console.log(json)
+            },
+        })
+    }
+    /*var provider = new Cesium.WebMapServiceImageryProvider({
+        url : url,
+        layers : '0',
+        params: {
+            'FORMAT': 'image/png',
+            'VERSION': '1.3.0',
+            STYLES: '',
+            LAYERS: '0',
+        },
+        proxy: new Cesium.DefaultProxy('/proxy/')
+    });*/
+
+    function createEsriImageryProvider(){
+        var esriImageryProvider = new Cesium.ArcGisMapServerImageryProvider({
+            url : 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
+
+        });
+        return esriImageryProvider;
+    }
+    function createGeo(){
+        var esriImagery = new Cesium.UrlTemplateImageryProvider({
+            url : 'http://36.110.66.218:8081/s/mapviz/750f5ccdcdbb420bb5b34faebec5a772/' +
+            '/mapserver/{z}/{x}/{y}.png?ak=OWJhNTU0ZDg5OTFhNDMzMTkzNDU0OWUwNjhhNDI2NDQ'
+
+        });
+        return esriImagery;
+    }
+    viewer.imageryLayers.addImageryProvider(createGeo());
+
+    viewer.imageryLayers.addImageryProvider(provider);
+
+    /*var removeHandler;
+    var content;
+    var autoInfoWindow;
+    var infoDiv = '<div id="trackPopUp" style="display:none;">'+
+        '<div id="trackPopUpContent" class="leaflet-popup" style="top:5px;left:0;">'+
+        '<a class="leaflet-popup-close-button" href="#">×</a>'+
+        '<div class="leaflet-popup-content-wrapper">'+
+        '<div id="trackPopUpLink" class="leaflet-popup-content" style="max-width: 300px;"></div>'+
+        '</div>'+
+        '<div class="leaflet-popup-tip-container">'+
+        '<div class="leaflet-popup-tip"></div>'+
+        '</div>'+
+        '</div>'+
+        '</div>';
+    $("#cesiumContainer").append(infoDiv);
+
+    var scene = viewer.scene;
+
+    var handler3D = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+    handler3D.setInputAction(function(movement) {
+        var pick = scene.pick(movement.position);
+        if(pick && pick.id){
+            console.log(pick.id);
+            $('#trackPopUp').show();
+            var cartographic = Cesium.Cartographic.fromCartesian(movement.position);
+            var point=[cartographic.longitude / Math.PI * 180, cartographic.latitude / Math.PI * 180];
+            var destination=Cesium.Cartesian3.fromDegrees(point[0], point[1], 3000.0);
+            var id=pick.id._id.replace(/[^0-9]/ig,"");
+            content =
+                '<table><tbody><tr><th style="color:black;">'+pick.id._name+'</th><td><button style="color:black;" οnclick="updateValve('+id+')">确定</button></td><td><button οnclick="deleteValve('+id+')" style="color:black;">删除</button></td></tr>'+
+                '<tr><th style="color:black;">类型</th><td><input style="color:black;" value='+station[id].stadianame+'></td></tr>'+
+                '<tr><th style="color:black;">经度</th><td><input id="x" style="color:black;" value='+station[id].x.toFixed(6)+'></td></tr>'+
+                '<tr><th style="color:black;">纬度</th><td><input id="y" style="color:black;" value='+station[id].y.toFixed(6)+'></td></tr>'+
+                '</tbody></table>'
+            var obj = {position:movement.position,destination:destination,content:content};
+            infoWindow(obj);
+
+            function infoWindow(obj) {
+                var picked = scene.pick(obj.position);
+                if (Cesium.defined(picked)) {
+                    var id = Cesium.defaultValue(picked.id, picked.primitive.id);
+                    if (id instanceof Cesium.Entity) {
+                        $(".cesium-selection-wrapper").show();
+                        $('#trackPopUpLink').empty();
+                        $('#trackPopUpLink').append(obj.content);
+                        function positionPopUp (c) {
+                            var x = c.x - ($('#trackPopUpContent').width()) / 2;
+                            var y = c.y - ($('#trackPopUpContent').height());
+                            $('#trackPopUpContent').css('transform', 'translate3d(' + x + 'px, ' + y + 'px, 0)');
+                        }
+                        var c = new Cesium.Cartesian2(obj.position.x, obj.position.y);
+                        $('#trackPopUp').show();
+                        positionPopUp(c); // Initial position
+                        // at the place item
+                        // picked
+                        removeHandler = viewer.scene.postRender.addEventListener(function () {
+                            if(picked.id._polyline!=null){
+                                var pos={};
+                                pos.x=(id._polyline._positions._value["0"].x+id._polyline._positions._value[1].x)/2;
+                                pos.y=(id._polyline._positions._value["0"].y+id._polyline._positions._value[1].y)/2;
+                                pos.z=(id._polyline._positions._value["0"].z+id._polyline._positions._value[1].z)/2;
+                                var changedC = Cesium.SceneTransforms.wgs84ToWindowCoordinates(viewer.scene,pos);
+                            }else{
+                                var changedC = Cesium.SceneTransforms.wgs84ToWindowCoordinates(viewer.scene, id._position._value);
+                            }// If things moved, move the
+                            // popUp too
+                            if ((c.x !== changedC.x) || (c.y !== changedC.y)) {
+                                positionPopUp(changedC);
+                                c = changedC;
+                            }
+                        });
+                        // PopUp close button event handler
+                        $('.leaflet-popup-close-button').click(function() {
+                            $('#trackPopUp').hide();
+                            $('#trackPopUpLink').empty();
+                            $(".cesium-selection-wrapper").hide();
+                            removeHandler.call();
+                            return false;
+                        });
+                        return id;
+                    }
+                }
+            }
+        }
+        else{
+            $('#trackPopUp').hide();
+
+        }
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);*/
+
+    /*var viewer = new Cesium.Viewer("cesiumContainer", { //高德英文街道中文
+        animation: false,  //是否显示动画控件
+        baseLayerPicker: false, //是否显示图层选择控件
+        geocoder: true, //是否显示地名查找控件
+        timeline: false, //是否显示时间线控件
+        sceneModePicker: true, //是否显示投影方式控件
+        navigationHelpButton: false, //是否显示帮助信息控件
+        infoBox: true,  //是否显示点击要素之后显示的信息
+        imageryProvider : new Cesium.ArcGisMapServerImageryProvider({
+            url: "http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer",
+        })
+    });*/
+
+
+/*
     //MGW004-Ortho 服务 图层
     var rectangleMGW004 = new Cesium.Rectangle(Cesium.Math.toRadians(109.97430300815466),Cesium.Math.toRadians(38.46070143172172),
         Cesium.Math.toRadians(109.98084206901632),Cesium.Math.toRadians(38.46531296996153));
@@ -130,7 +386,8 @@
     var rectangleDxm = new Cesium.Rectangle(Cesium.Math.toRadians(101.70550500807069),Cesium.Math.toRadians(29.210545375648298),
         Cesium.Math.toRadians(104.61500802616614),Cesium.Math.toRadians(32.81559769455616));
     var imagelayerDxm = new Cesium.ImageryLayer(new Cesium.UrlTemplateImageryProvider({
-        url: 'http://localhost:9002/api/wmts/gettile/29c86c8783b048c390744ffcc4194e8b/{z}/{x}/{y}',
+        //url: 'http://localhost:9002/api/wmts/gettile/29c86c8783b048c390744ffcc4194e8b/{z}/{x}/{y}',
+        url:'http://localhost:8080/geoserver/test/wms',
         tilingScheme: new Cesium.WebMercatorTilingScheme(),
         minimumLevel: 0,
         rectangle:  rectangleDxm,
@@ -212,7 +469,7 @@
     var heading = 0;
     var tileset = new Cesium.Cesium3DTileset({
         url: 'http://localhost:9002/api/folder/b5486082b520459fae98078bb5d86a3e/tileset.json'
-    });
+    });*/
 
 
     var flag = true
@@ -319,7 +576,7 @@
 
                 break;
             default:
-                console("输入错误");
+                console.log("输入错误");
         }
 
     }

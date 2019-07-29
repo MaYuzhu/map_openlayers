@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .wrap{
+            width: 1200px;
+            height: 500px;
+            border: 2px solid #d00;
+            position: relative;
+            overflow: hidden;
+        }
+        .info{
+            width: 1200px;
+            height: 600px;
+            border: 1px solid #0D9BF2;
+            position: absolute;
+            top:100px;
+            left: -100px;
+        }
+    </style>
+    <script src="./jquery-1.11.3.min.js"></script>
+    <script>
+
+        $(function () {
+            $('.aaa').click(function () {
+                alert(123)
+                console.log()
+                /*$('.info iframe .sign-in-name').val('test@domain.com')
+                $('.info iframe .sign-in-password').val('test')
+                $('.info iframe .sign-in-submit').click()*/
+            })
+        })
+        /*window.onload = function () {
+            var ojIframe = $("#oIframe")
+            console.log(ojIframe)
+            $('.aaa').click(function () {
+                alert(123)
+            })
+        }*/
+
+
+        /*$('.aaa').on('click',function () {
+            alert('123')
+            console.log('147')
+            //$('.info iframe .sign-in-name').val('test@domain.com')
+            //$('.info iframe .sign-in-password').val('test')
+            //$('.info iframe .sign-in-submit').click()
+        })*/
+
+
+    </script>
+</head>
+<body>
+<div>
+    <div class="aaa">点击</div>
+    <!--<form action="http://192.168.20.23:8081/jihai/op/sign">
+        账号 <input name="email" type="text" class="user"> <br>
+        密码 <input name="hash_password" type="text" class="password">
+        <input type="submit">
+    </form>-->
+    <!--账号 <input type="text" class="user"> <br>
+    密码 <input type="text" class="password">
+    <p class="login">登录</p>-->
+</div>
+<h2 class="aaa">这是我的网页</h2>
+<p>下面是嵌入的别人的</p>
+<div class="wrap">
+    <div class="info">
+        <iframe id="oIframe" src="http://192.168.10.10/project/all" width="1000" height="600" scrolling="yes" />
+    </div>
+
+</div>
+
+</body>
+</html>
