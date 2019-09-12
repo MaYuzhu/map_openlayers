@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>指针实验</title>
+    <script src="./js/jquery-1.11.3.min.js"></script>
+    <style>
+        .wrap{
+            width: 182px;
+            height: 118px;
+            background: url("./images/clock_dial.png");
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+
+        }
+        .zhen{
+            width: 21px;
+            height: 24px;
+            transform: rotateZ(-60deg);  /*-60deg ~ 150deg*/
+            transform-origin: 90px 90px;
+        }
+        .img{
+            width: 21px;
+            height: 21px;
+            transform: translate(22px,22px);
+        }
+        .img img{
+            width: 100%;
+            height: 100%;
+        }
+        .button{
+            display: flex;
+            justify-content: center;
+            /*background: #0D9BF2;*/
+            margin-top: 40px;
+        }
+        .button p{
+            width: 24px;
+            height: 24px;
+            background: #333333;
+            margin-right: 4px;
+            text-align: center;
+            line-height: 24px;
+            color: white;
+            cursor: pointer;
+        }
+        .line{
+            width: 500px;
+            height: 4px;
+            background: #46cbf2;
+            position: absolute;
+            top: 260px;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .line_blue{
+            width: 0;
+            height: 4px;
+            background: #2041f2;
+            position: absolute;
+        }
+        .ball{
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: hotpink;
+            position: absolute;
+            top:-19px;
+            right: -5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="zhen" id="zhen">
+            <div class="img">
+                <img src="./images/pointer.png" alt="">
+            </div>
+        </div>
+        <div class="button">
+            <p>&lt;</p>
+            <p>走</p>
+            <p>&gt;</p>
+        </div>
+        <p class="zeroing" style="cursor: pointer">归零</p>
+    </div>
+    <div class="line">
+        <div class="line_blue" id="line_blue"><p class="ball"></p></div>
+    </div>
+</body>
+<script>
+    window.onload = function () {
+
+        var i=-60
+        var time_lang = 20  //秒
+        var time_id
+        function intv(){
+            time_id = setTimeout(function(){
+                //console.log(i++);
+                i+=0.1
+                document.getElementById('zhen').style.transform = 'rotateZ(' + i +'deg)'
+                $('.line_blue').css({width: `${(60+i)*10/21}%`})
+                intv()
+            },time_lang*1000/2100)
+            if(i>150){
+                //i = 0
+                clearTimeout(time_id)
+            }
+        }
+        var flag = true
+        $('.button>:nth-child(2)').on('click',function () {
+            if(flag){
+                $('.button>:nth-child(2)').text('停')
+                intv()
+                flag = !flag
+            }else {
+                $('.button>:nth-child(2)').text('走')
+                clearTimeout(time_id)
+                flag = !flag
+            }
+
+        })
+        $('.button>:nth-child(1)').on('click',function () {
+            if(i<=-60){
+                return
+            }
+            i -= 10
+            document.getElementById('zhen').style.transform = 'rotateZ(' + i +'deg)'
+            $('.line_blue').css({width: `${(60+i)*10/21}%`})
+        })
+        $('.button>:nth-child(3)').on('click',function () {
+            if(i>=150){
+                return
+            }
+            i += 10
+            document.getElementById('zhen').style.transform = 'rotateZ(' + i +'deg)'
+            $('.line_blue').css({width: `${(60+i)*10/21}%`})
+        })
+        //intv()
+        $('.zeroing').on('click',function () {
+            i = -60
+            document.getElementById('zhen').style.transform = 'rotateZ(' + i +'deg)'
+            $('.line_blue').css({width: `${(60+i)*10/21}%`})
+            clearTimeout(time_id)
+            $('.button>:nth-child(2)').text('走')
+            flag = true
+        })
+    }
+
+
+</script>
+</html>

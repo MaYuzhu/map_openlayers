@@ -163,8 +163,14 @@
 
     //地形数据
     var terrainProvider = new Cesium.CesiumTerrainProvider({
-        url:'http://192.168.20.26/test'
+        //requestWaterMask : true,
+        //requestVertexNormals : true,
+        //36.110.66.218:8888
+        //url:'http://36.110.66.218:8888/terrain'
+        url:"http://36.110.66.218:8888/terra"
     })
+
+
 
     var viewer = new Cesium.Viewer('cesiumContainer',
         {
@@ -197,6 +203,36 @@
         })*!/
         }*/
     );
+    var rectangle = new Cesium.Rectangle.fromDegrees(114.999046325684, 19.9995803833008,
+        119.999198913574, 24.9997329711914);
+
+    /*viewer.camera.flyTo({
+        destination: rectangle,
+        orientation: {
+            heading : Cesium.Math.toRadians(10.0), // 方向
+            pitch : Cesium.Math.toRadians(-90.0),// 倾斜角度
+            roll : 0
+        },
+
+    });*/
+
+    // 获取当前镜头位置的笛卡尔坐标
+    let cameraPos = viewer.camera.position;
+
+    // 获取当前坐标系标准
+    let ellipsoid = viewer.scene.globe.ellipsoid;
+
+    // 根据坐标系标准，将笛卡尔坐标转换为地理坐标
+    let cartographic = ellipsoid.cartesianToCartographic(cameraPos);
+
+    console.log(cartographic.height /2)
+    viewer.camera.zoomIn(cartographic.height /2);
+
+
+    /*let rec = despUtil.Math.Rectangle.fromArrayD([114.999046325684,19.9995803833008,119.999198913574,24.9997329711914]);
+    viewer.camera.flyTo({
+        destination: rec
+    });*/
     var provider = new Cesium.WebMapServiceImageryProvider({
         url: url,
         layers: 'heritage:WorldHeritageSites',
@@ -215,7 +251,7 @@
     //https://geohey.com/apps/dataviz/31062030e4bb4f1fb1e2c74f6c0f2ebf/
     // share?ak=OGJkMGQwNTVlNzYzNDA0NmIwNDYxZDY4YjQwYmJlYzc
 
-    ajax_geo_map('https://geohey.com/s/mapviz/31062030e4bb4f1fb1e2c74f6c0f2ebf/mapserver/config?ak=OGJkMGQwNTVlNzYzNDA0NmIwNDYxZDY4YjQwYmJlYzc','31062030e4bb4f1fb1e2c74f6c0f2ebf')
+    //ajax_geo_map('https://geohey.com/s/mapviz/31062030e4bb4f1fb1e2c74f6c0f2ebf/mapserver/config?ak=OGJkMGQwNTVlNzYzNDA0NmIwNDYxZDY4YjQwYmJlYzc','31062030e4bb4f1fb1e2c74f6c0f2ebf')
 
     function ajax_geo_map(url,uid) {
         $.ajax({
@@ -259,7 +295,7 @@
     }
     viewer.imageryLayers.addImageryProvider(createGeo());
 
-    viewer.imageryLayers.addImageryProvider(provider);
+    //viewer.imageryLayers.addImageryProvider(provider);
 
     /*var removeHandler;
     var content;
